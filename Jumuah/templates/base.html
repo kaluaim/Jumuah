@@ -1,8 +1,24 @@
+<!DOCTYPE html>
 <html>
-<head>
 
+<head>
+  <link rel="stylesheet" type="text/css" href="static/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block head %}{% endblock %}
+  <title>Jumuah{% block title %}{% endblock %}</title>
 </head>
+
 <body>
-  
+  <header>
+  </header>
+  <div class="wrapper clearfix">
+    <div class="clearfix"></div>
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+  </div>
 </body>
 </html>
