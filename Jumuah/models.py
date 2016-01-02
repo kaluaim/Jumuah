@@ -12,19 +12,24 @@ class User(Base):
         self.fullname, self.password)
 
 
-class Mosuq(Base):
-    __tablename__ = 'mosuqes'
+class Mosque(Base):
+    __tablename__ = 'mosques'
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    location_id = (Integer, ForeignKey('location.id'))
+    imam_id = (Integer, ForeignKey('user.id'))
+
 
 
 class Location(Base):
     __tablename__ = 'locations'
-
+    id = Column(Integer, primary_key=True)
 
 class Vote(Base):
     __tablename__ = 'votes'
+    id = Column(Integer, primary_key=True)
 
 
 class Topic(Base):
     __tablename__ = 'topics'
+    id = Column(Integer, primary_key=True)
