@@ -1,35 +1,79 @@
-from sqlalchemy import Column, Integer, String
+from app import db
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'users'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    password = Column(String)
-    email = Column(String)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    password = db.Column(db.String)
+    email = db.Column(db.String)
+    #date joined
+
+    def __init__(self, name, password, email):
+        self.name = name
+        self.password = password
+        self.email = email
 
     def __repr__(self):
-        return "<User(name='%s', fullname='%s', password='%s')>" % (self.name,
-        self.fullname, self.password)
+        return '<User (name={}, password={}, email={})>'.format(self.name,
+            self.password, self.email)
 
 
-class Mosque(Base):
+class Mosque(db.Model):
     __tablename__ = 'mosques'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    location_id = (Integer, ForeignKey('location.id'))
-    imam_id = (Integer, ForeignKey('user.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    location_id = db.Column(db.Integer, ForeignKey('location.id'))
+    imam_id = db.Column(db.Integer, ForeignKey('user.id'))
+    #date added
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return '<Mosque (name={})>'.format(self.name)
 
 
-
-class Location(Base):
+class Location(db.Model):
     __tablename__ = 'locations'
-    id = Column(Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    country = db.Column(db.String)
+    province = db.Column(db.String)
+    city = db.Column(db.String)
+    district = db.Column(db.String)
 
-class Vote(Base):
+    def __init__(self, country, province, city, district):
+        self.country = country
+        self.province = province
+        self.city = city
+        self.district = district
+
+    def __repr__(self):
+        return '<Location (country={}, province={}, city={},\
+            district={})>'.format(self.country, self.province, self.city,
+            self.district)
+
+
+class Vote(db.Model):
     __tablename__ = 'votes'
-    id = Column(Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    topic_id = db.Column(db.Integer, ForeignKey('topic.id'))
+    user_id = db.Column(db.Integer, ForeignKey('user.id'))
+    #date of vote
+
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return '<Vote (topic={})>'.format(self.topic_id)
 
 
-class Topic(Base):
+class Topic(db.Model):
     __tablename__ = 'topics'
-    id = Column(Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+
+    def __init__(self, title):
+        self.title = title
+
+    def __init__(self):
+        return '<Topic (title={})>'.format(self.title)
