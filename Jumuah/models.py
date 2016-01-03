@@ -22,8 +22,8 @@ class Mosque(db.Model):
     __tablename__ = 'mosques'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    location_id = db.Column(db.Integer, ForeignKey('location.id'))
-    imam_id = db.Column(db.Integer, ForeignKey('user.id'))
+    location_id = db.Column(db.Integer, db.ForeignKey('locations.id'))
+    imam_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     #date added
 
     def __init__(self, name):
@@ -56,8 +56,8 @@ class Location(db.Model):
 class Vote(db.Model):
     __tablename__ = 'votes'
     id = db.Column(db.Integer, primary_key=True)
-    topic_id = db.Column(db.Integer, ForeignKey('topic.id'))
-    user_id = db.Column(db.Integer, ForeignKey('user.id'))
+    topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     #date of vote
 
     def __init__(self):
