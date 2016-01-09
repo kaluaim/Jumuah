@@ -1,9 +1,16 @@
-from app import db
+import datetime
+from flask.ext.login import UserMixin
+from app import db, login_manager
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String)
     password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
     date_joined = db.Column(db.DateTime, nullable=False)
@@ -11,17 +18,29 @@ class User(db.Model):
     admin = db.Column(db.Boolean, nullable=False, default=False)
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
 
-    def __init__(self, name, password, email, date_joined, last_login, admin=False):
+    def __init__(self, password, email, name='', admin=False):
         self.name = name
         self.password = password
         self.email = email
-        self.date_joined = date_joined
-        self.last_login = last_login
+        self.date_joined = datetime.datetime.now()
+        self.last_login = datetime.datetime.now()
         self.admin = admin
 
     def __repr__(self):
         return '<User (name={}, password={}, email={})>'.format(self.name,
             self.password, self.email)
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
 
 
 class Mosque(db.Model):

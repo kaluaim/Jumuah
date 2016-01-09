@@ -4,11 +4,10 @@
 {% block content %}
 
   <header class="content-header">
-    <h1>Please login</h1>
+    <h1>Add Mosque</h1>
   </header>
 
   <br>
-
 
   <form class="form" role="form" method="post" action="">
 
@@ -19,12 +18,13 @@
 
     <div class="col-lg-4 col-sm-4">
 
-      {{ wtf.form_field(form.email) }}
-      {{ wtf.form_field(form.password) }}
+      {{ wtf.form_field(form.name) }}
+      {{ wtf.form_field(form.country) }}
+      {{ wtf.form_field(form.province) }}
+      {{ wtf.form_field(form.city) }}
+      {{ wtf.form_field(form.district) }}
 
-      <button class="btn btn-success" type="submit">Sign In!</button>
-      <br><br>
-      <p>Need to <a href="{{ url_for('register') }}">Register</a>?</p>
+      <button class="btn btn-success" type="submit">Add</button>
     </div>
 
   </form>
