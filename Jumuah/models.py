@@ -6,7 +6,8 @@ class User(db.Model):
     name = db.Column(db.String)
     password = db.Column(db.String)
     email = db.Column(db.String)
-    #date joined
+    date_joined = db.Column(db.DateTime)
+    last_login = db.Column(db.DateTime)
 
     def __init__(self, name, password, email):
         self.name = name
@@ -71,6 +72,8 @@ class Topic(db.Model):
     __tablename__ = 'topics'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
+    mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))
+    user_created_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __init__(self, title):
         self.title = title
