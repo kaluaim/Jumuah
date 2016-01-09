@@ -3,4 +3,11 @@
 {% block content %}
 <h1>Mosques list</h1>
 <a href="/mosque/add/">add new</a>
+{% if mosques %}
+<ul>
+{% for mosque in mosques %}
+<li><a href="/mosque/{{ mosque.id }}">{{ mosque.name }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
 {% endblock %}

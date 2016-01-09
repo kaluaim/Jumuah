@@ -15,6 +15,9 @@
   <header>
     <div class="container">
       <h1><a href="/">Jumuah</a></h1>
+      {% if current_user.is_authenticated %}
+        Hi {{ current_user.email }}!
+      {% endif %}
     </div>
   </header>
   <div class="wrapper clearfix">

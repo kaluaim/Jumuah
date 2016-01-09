@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Mosque {{ id }}</h1>
+<h1>{{ mosque.id }}, {{ mosque.name }}</h1><br/>
+{{ mosque.country }},
+{{ mosque.province }},
+{{ mosque.city }},
+{{ mosque.district }}
 {% endblock %}

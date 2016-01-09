@@ -47,36 +47,23 @@ class Mosque(db.Model):
     __tablename__ = 'mosques'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
-    location_id = db.Column(db.Integer, db.ForeignKey('locations.id'))
-    imam_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    date_added = db.Column(db.DateTime, nullable=False)
-    topics = db.relationship('Topic', backref='mosque', lazy='dynamic')
-
-    def __init__(self, name):
-        self.name = name
-
-    def __repr__(self):
-        return '<Mosque (name={})>'.format(self.name)
-
-
-class Location(db.Model):
-    __tablename__ = 'locations'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     country = db.Column(db.String, nullable=False)
     province = db.Column(db.String, nullable=False)
     city = db.Column(db.String, nullable=False)
     district = db.Column(db.String, nullable=False)
+    date_added = db.Column(db.DateTime, nullable=False)
+    topics = db.relationship('Topic', backref='mosque', lazy='dynamic')
 
-    def __init__(self, country, province, city, district):
+    def __init__(self, name, country, province, city, district):
+        self.name = name
         self.country = country
         self.province = province
         self.city = city
         self.district = district
+        self.date_added = datetime.datetime.now()
 
     def __repr__(self):
-        return '<Location (country={}, province={}, city={},\
-            district={})>'.format(self.country, self.province, self.city,
-            self.district)
+        return '<Mosque (name={})>'.format(self.name)
 
 
 class Vote(db.Model):

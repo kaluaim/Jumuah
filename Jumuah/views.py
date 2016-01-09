@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, flash
 from app import app, db, login_manager
 from forms import LoginForm, RegisterForm, AddMosqueForm
 from flask.ext.login import login_user, logout_user, login_required
-from models import User
+from models import User, Mosque
 
 @app.route('/')
 def index():
@@ -52,15 +52,30 @@ def logout():
 @app.route('/mosque/<int:mosque_id>/')
 def mosque(mosque_id=-1):
     if mosque_id is not -1:
-        return render_template('mosque.html', id=mosque_id)
+        mosque = Mosque.query.get(mosque_id)
+        return render_template('mosque.html', mosque=mosque)
     else:
-        return render_template('mosques.html')
+        mosques = Mosque.query.all()
+        return render_template('mosques.html/', mosques=mosques)
 
 
 @app.route('/mosque/add/', methods=['GET', 'POST'])
 @login_required
 def add_mosque():
     form = AddMosqueForm(request.form)
+
+    if form.validate_on_submit():
+        mosque = Mosque(
+            name=form.name.data,
+            country=form.country.data,
+            province=form.province.data,
+            city=form.city.data,
+            district=form.district.data
+        )
+        db.session.add(mosque)
+        db.session.commit()
+        flash('Mosque been added', 'success')
+        return redirect(url_for('mosque'))
     return render_template('mosque_add.html', form=form)
 
 
