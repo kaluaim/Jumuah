@@ -47,3 +47,7 @@ class AddMosqueForm(Form):
         'district',
         validators=[DataRequired()]
     )
+
+
+class CreateTopic(Form):
+    title = TextField('Title', validators=[DataRequired()])

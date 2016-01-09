@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+  <header class="content-header">
+    <h1>Add topic</h1>
+  </header>
+
+  <br>
+  <h2>for {{ mosque.name }}</h2>
+  <form class="form" role="form" method="post" action="">
+
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens="only") }}
+
+
+    <div class="col-lg-4 col-sm-4">
+
+      {{ wtf.form_field(form.title) }}
+
+      <button class="btn btn-success" type="submit">Add</button>
+    </div>
+
+  </form>
+
+
+{% endblock content %}

@@ -88,8 +88,9 @@ class Topic(db.Model):
     user_created_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     votes = db.relationship('Vote', backref='topic', lazy='dynamic')
 
-    def __init__(self, title):
+    def __init__(self, title, mosque_id):
         self.title = title
+        self.mosque_id = mosque_id
 
     def __init__(self):
         return '<Topic (title={})>'.format(self.title)

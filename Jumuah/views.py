@@ -1,13 +1,12 @@
 from flask import render_template, redirect, url_for, request, flash
 from app import app, db, login_manager
-from forms import LoginForm, RegisterForm, AddMosqueForm
+from forms import LoginForm, RegisterForm, AddMosqueForm, CreateTopic
 from flask.ext.login import login_user, logout_user, login_required
-from models import User, Mosque
+from models import User, Mosque, Topic
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -22,7 +21,6 @@ def login():
             flash('Invalid email and/or password', 'danger')
             return render_template('login.html', form=form)
     return render_template('login.html', form=form)
-
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
@@ -39,7 +37,6 @@ def register():
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
 
-
 @app.route('/logout/', methods=['GET'])
 @login_required
 def logout():
@@ -47,23 +44,20 @@ def logout():
     flash('You were logged out. Bye!', 'success')
     return redirect(url_for('index'))
 
-
 @app.route('/mosque/')
 @app.route('/mosque/<int:mosque_id>/')
 def mosque(mosque_id=-1):
     if mosque_id is not -1:
-        mosque = Mosque.query.get(mosque_id)
+        mosque = Mosque.query.filter_by(id=mosque_id).first_or_404()
         return render_template('mosque.html', mosque=mosque)
     else:
         mosques = Mosque.query.all()
         return render_template('mosques.html/', mosques=mosques)
 
-
 @app.route('/mosque/add/', methods=['GET', 'POST'])
 @login_required
 def add_mosque():
     form = AddMosqueForm(request.form)
-
     if form.validate_on_submit():
         mosque = Mosque(
             name=form.name.data,
@@ -78,16 +72,29 @@ def add_mosque():
         return redirect(url_for('mosque'))
     return render_template('mosque_add.html', form=form)
 
+@app.route('/mosque/<int:mosque_id>/topic/', methods=['GET', 'POST'])
+def add_topic(mosque_id=-1):
+    form = CreateTopic(request.form)
+    if mosque_id is not -1:
+        mosque = Mosque.query.filter_by(id=mosque_id).first()
+        if form.validate_on_submit():
+            topic = Topic(
+                title=form.title.data,
+                mosque_id=mosque_id
+            )
+            db.session.add(topic)
+            db.session.commit()
+            flash('Topic added', 'success')
+            return redirect(url_for('mosque'))
+    return render_template('topic_add.html', form=form, mosque=mosque)
 
 @app.errorhandler(403)
 def forbidden_page(error):
     return render_template("errors/403.html"), 403
 
-
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template("errors/404.html"), 404
-
 
 @app.errorhandler(500)
 def server_error_page(error):
