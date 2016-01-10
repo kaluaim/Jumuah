@@ -82,23 +82,6 @@ def add_mosque():
         return redirect(url_for('mosque'))
     return render_template('mosque_add.html', form=form)
 
-@app.route('/mosque/<int:mosque_id>/topic/', methods=['GET', 'POST'])
-def add_topic(mosque_id=-1):
-    form = CreateTopic(request.form)
-    if mosque_id is not -1:
-        mosque = Mosque.query.filter_by(id=mosque_id).first()
-        if form.validate_on_submit():
-            topic = Topic(
-                title=form.title.data,
-                user_created_id=current_user.id,
-                mosque_id=mosque_id
-            )
-            db.session.add(topic)
-            db.session.commit()
-            flash('Topic added', 'success')
-            return redirect(url_for('mosque', mosque_id=mosque_id))
-    return render_template('topic_add.html', form=form, mosque=mosque)
-
 @app.errorhandler(403)
 def forbidden_page(error):
     return render_template("errors/403.html"), 403

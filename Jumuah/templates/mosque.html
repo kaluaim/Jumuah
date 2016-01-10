@@ -8,8 +8,6 @@
 {{ mosque.city }},
 {{ mosque.district }}
 <br/><br/>
-<a href="/mosque/{{ mosque.id}}/topic/">add topic</a>
-<br/><br/>
 <ul>
 {% for topic in mosque.topics.all() %}
 <li>{{ topic.title }}</li>
