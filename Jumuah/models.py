@@ -73,8 +73,10 @@ class Vote(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     vote_date = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, vote_date):
-        self.vote_date = vote_date
+    def __init__(self, topic_id, user_id):
+        self.topic_id = topic_id
+        self.user_id = user_id
+        self.vote_date = datetime.datetime.now()
 
     def __repr__(self):
         return '<Vote (topic={})>'.format(self.topic_id)

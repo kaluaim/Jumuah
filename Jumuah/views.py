@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, flash
 from app import app, db, login_manager
 from forms import LoginForm, RegisterForm, AddMosqueForm, CreateTopic
 from flask.ext.login import login_user, logout_user, login_required, current_user
-from models import User, Mosque, Topic
+from models import User, Mosque, Topic, Vote
 
 @app.route('/')
 def index():
@@ -81,6 +81,18 @@ def add_mosque():
         flash('Mosque been added', 'success')
         return redirect(url_for('mosque'))
     return render_template('mosque_add.html', form=form)
+
+@app.route('/mosque/<int:mosque_id>/<int:topic_id>/vote', methods=['GET'])
+def vote(mosque_id=-1, topic_id=-1):
+    if mosque_id is not -1 and topic_id is not -1:
+        vote = Vote(
+            topic_id=topic_id,
+            user_id=current_user.id,
+        )
+        db.session.add(vote)
+        db.session.commit()
+        flash('vote added', 'success')
+    return redirect(url_for('mosque', mosque_id=mosque_id))
 
 @app.errorhandler(403)
 def forbidden_page(error):

@@ -10,7 +10,7 @@
 <br/><br/>
 <ul>
 {% for topic in mosque.topics.all() %}
-<li>{{ topic.title }}</li>
+<li>{{ topic.title }}</li> <a href="/mosque/{{ mosque.id }}/{{ topic.id }}/vote">vote</a> <span>{{ topic.votes.all()|count }}</span>
 {% endfor %}
 </ul>
 <br/><br/>
