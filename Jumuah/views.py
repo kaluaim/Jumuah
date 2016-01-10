@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, flash
 from app import app, db, login_manager
 from forms import LoginForm, RegisterForm, AddMosqueForm, CreateTopic
-from flask.ext.login import login_user, logout_user, login_required
+from flask.ext.login import login_user, logout_user, login_required, current_user
 from models import User, Mosque, Topic
 
 @app.route('/')
@@ -45,11 +45,21 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/mosque/')
-@app.route('/mosque/<int:mosque_id>/')
+@app.route('/mosque/<int:mosque_id>/', methods=['GET', 'POST'])
 def mosque(mosque_id=-1):
     if mosque_id is not -1:
+        form = CreateTopic(request.form)
+        if form.validate_on_submit():
+            topic = Topic(
+                title=form.title.data,
+                user_created_id=current_user.id,
+                mosque_id=mosque_id
+            )
+            db.session.add(topic)
+            db.session.commit()
+            flash('Topic added', 'success')
         mosque = Mosque.query.filter_by(id=mosque_id).first_or_404()
-        return render_template('mosque.html', mosque=mosque)
+        return render_template('mosque.html', mosque=mosque, form=form)
     else:
         mosques = Mosque.query.all()
         return render_template('mosques.html/', mosques=mosques)
@@ -80,12 +90,13 @@ def add_topic(mosque_id=-1):
         if form.validate_on_submit():
             topic = Topic(
                 title=form.title.data,
+                user_created_id=current_user.id,
                 mosque_id=mosque_id
             )
             db.session.add(topic)
             db.session.commit()
             flash('Topic added', 'success')
-            return redirect(url_for('mosque'))
+            return redirect(url_for('mosque', mosque_id=mosque_id))
     return render_template('topic_add.html', form=form, mosque=mosque)
 
 @app.errorhandler(403)

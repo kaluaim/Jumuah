@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
 <h1>{{ mosque.id }}, {{ mosque.name }}</h1><br/>
@@ -8,4 +9,26 @@
 {{ mosque.district }}
 <br/><br/>
 <a href="/mosque/{{ mosque.id}}/topic/">add topic</a>
+<br/><br/>
+<ul>
+{% for topic in mosque.topics.all() %}
+<li>{{ topic.title }}</li>
+{% endfor %}
+</ul>
+<br/><br/>
+<form class="form" role="form" method="post" action="">
+
+  {{ form.csrf_token }}
+  {{ form.hidden_tag() }}
+  {{ wtf.form_errors(form, hiddens="only") }}
+
+
+  <div class="col-lg-4 col-sm-4">
+
+    {{ wtf.form_field(form.title) }}
+
+    <button class="btn btn-success" type="submit">Add</button>
+  </div>
+
+</form>
 {% endblock %}
