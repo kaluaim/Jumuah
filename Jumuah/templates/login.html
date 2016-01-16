@@ -2,32 +2,21 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
-
-  <header class="content-header">
-    <h1>Please login</h1>
-  </header>
-
-  <br>
-
-
-  <form class="form" role="form" method="post" action="">
-
-    {{ form.csrf_token }}
-    {{ form.hidden_tag() }}
-    {{ wtf.form_errors(form, hiddens="only") }}
-
-
-    <div class="col-lg-4 col-sm-4">
-
-      {{ wtf.form_field(form.email) }}
-      {{ wtf.form_field(form.password) }}
-
-      <button class="btn btn-success" type="submit">Sign In!</button>
-      <br><br>
-      <p>Need to <a href="{{ url_for('register') }}">Register</a>?</p>
-    </div>
-
-  </form>
-
-
+  <div class="page-header">
+    <h1>الدخول</h1>
+  </div>
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <form class="form" role="form" method="post" action="">
+      {{ form.csrf_token }}
+      {{ form.hidden_tag() }}
+      {{ wtf.form_errors(form, hiddens="only") }}
+        {{ wtf.form_field(form.email) }}
+        {{ wtf.form_field(form.password) }}
+        <button class="btn btn-success" type="submit">دخول</button>
+        <br><br>
+        <p>لا تملك حساب؟ <a href="{{ url_for('register') }}">فضلا قم بالتسجيل</a></p>
+    </form>
+  </div>
+  <div class="col-md-3"></div>
 {% endblock content %}

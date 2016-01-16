@@ -1,3 +1,7 @@
+import sys
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
 from app import app, db
 from models import *
 from views import *

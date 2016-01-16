@@ -1,24 +1,25 @@
+# -*- coding: utf-8 -*-
 from flask_wtf import Form
 from wtforms import TextField, PasswordField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 
 class LoginForm(Form):
-    email = TextField('Email Address', [DataRequired(), Email()])
-    password = PasswordField('Password', [DataRequired()])
+    email = TextField('البريد الإلكتروني', [DataRequired(), Email()])
+    password = PasswordField('كلمة المرور', [DataRequired()])
 
 
 class RegisterForm(Form):
     email = TextField(
-        'Email Address',
+        'البريد الإلكتروني',
         validators=[DataRequired(), Email(message=None), Length(min=6, max=40)]
     )
     password = PasswordField(
-        'Password',
+        'كلمة المرور',
         validators=[DataRequired(), Length(min=6, max=25)]
     )
     confirm = PasswordField(
-        'Confirm password',
+        'تأكيد كلمة المرور',
         validators=[
             DataRequired(),
             EqualTo('password', message='Passwords must match.')

@@ -1,0 +1,34 @@
+* {
+  margin:0;
+  padding:0;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'XBKhoramshahrRegular';
+  font-weight: normal;
+  font-style: normal; 
+}
+
+#wrap {
+  min-height: 100%;
+  margin-top: -82px;
+  padding-top: 80px;
+}
+
+#main {
+  overflow:auto;
+	padding-bottom: 80px; /* must be same height as the footer */
+}
+
+footer {
+  position: relative;
+	margin-top: -80px; /* negative value of footer height */
+	height: 80px;
+	clear:both;
+}
+
+.navbar-brand img {
+  height: 40px;
+  margin: -10px 0 0 0;
+}
