@@ -2,32 +2,26 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
-
-  <header class="content-header">
-    <h1>Add Mosque</h1>
-  </header>
-
-  <br>
-
-  <form class="form" role="form" method="post" action="">
-
-    {{ form.csrf_token }}
-    {{ form.hidden_tag() }}
-    {{ wtf.form_errors(form, hiddens="only") }}
-
-
-    <div class="col-lg-4 col-sm-4">
-
-      {{ wtf.form_field(form.name) }}
-      {{ wtf.form_field(form.country) }}
-      {{ wtf.form_field(form.province) }}
-      {{ wtf.form_field(form.city) }}
-      {{ wtf.form_field(form.district) }}
-
-      <button class="btn btn-success" type="submit">Add</button>
+<div class="col-md-3"></div>
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">أضف جامع</h3>
     </div>
-
-  </form>
-
-
+    <div class="panel-body">
+      <form class="form" role="form" method="post" action="">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        {{ wtf.form_errors(form, hiddens="only") }}
+        {{ wtf.form_field(form.name) }}
+        {{ wtf.form_field(form.country) }}
+        {{ wtf.form_field(form.province) }}
+        {{ wtf.form_field(form.city) }}
+        {{ wtf.form_field(form.district) }}
+        <button class="btn btn-success" type="submit">أضف</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="col-md-3"></div>
 {% endblock content %}

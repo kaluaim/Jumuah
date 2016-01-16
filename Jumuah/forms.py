@@ -29,26 +29,26 @@ class RegisterForm(Form):
 
 class AddMosqueForm(Form):
     name = TextField(
-        'Mosque Name',
+        'اسم الجامع',
         validators=[DataRequired()]
     )
     country = TextField(
-        'Country',
+        'الدولة',
         validators=[DataRequired()]
     )
     province = TextField(
-        'Province',
+        'المنطقة',
         validators=[DataRequired()]
     )
     city = TextField(
-        'City',
+        'المدينة',
         validators=[DataRequired()]
     )
     district = TextField(
-        'district',
+        'الحي',
         validators=[DataRequired()]
     )
 
 
 class CreateTopic(Form):
-    title = TextField('Title', validators=[DataRequired()])
+    title = TextField('العنوان', validators=[DataRequired()])

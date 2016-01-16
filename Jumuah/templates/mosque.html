@@ -2,31 +2,72 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
-<h1>{{ mosque.id }}, {{ mosque.name }}</h1><br/>
-{{ mosque.country }},
-{{ mosque.province }},
-{{ mosque.city }},
-{{ mosque.district }}
-<br/><br/>
-<ul>
-{% for topic in mosque.topics.all() %}
-<li>{{ topic.title }}</li> <a href="/mosque/{{ mosque.id }}/{{ topic.id }}/vote">vote</a> <span>{{ topic.votes.all()|count }}</span>
-{% endfor %}
-</ul>
-<br/><br/>
-<form class="form" role="form" method="post" action="">
-
-  {{ form.csrf_token }}
-  {{ form.hidden_tag() }}
-  {{ wtf.form_errors(form, hiddens="only") }}
-
-
-  <div class="col-lg-4 col-sm-4">
-
-    {{ wtf.form_field(form.title) }}
-
-    <button class="btn btn-success" type="submit">Add</button>
+<div class="row">
+  <div class="col-lg-9">
+    <div class="panel panel-default mosque-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">معلومات الجامع</h3>
+      </div>
+      <div class="panel-body">
+        <h1>جامع: {{ mosque.name }}</h1><br/>
+        <span><i class="fa fa-map-marker"></i> {{ mosque.country }}, {{ mosque.province }}, {{ mosque.city }}, {{ mosque.district }}</span>
+      </div>
+    </div>
   </div>
-
-</form>
+  <div class="col-lg-3">
+    <div class="panel panel-default mosque-info">
+      <div class="panel-body">
+        <h1 class="add-image"><i class="fa fa-picture-o"></i></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">عنوان الخطبة القادمة</h3>
+      </div>
+      <div class="panel-body">
+        <h1>الصلاة</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">التصويت على القادمة اللتي تليها</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        {% for topic in mosque.topics.all() %}
+          <li>{{ topic.title }}</li> <a href="/mosque/{{ mosque.id }}/{{ topic.id }}/vote">vote</a> <span>{{ topic.votes.all()|count }}</span>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">اقترح موضوع</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form" role="form" method="post" action="/mosque/{{ mosque.id }}/topic/">
+          {{ form.csrf_token }}
+          {{ form.hidden_tag() }}
+          {{ wtf.form_errors(form, hiddens="only") }}
+          <div class="col-lg-4 col-sm-4">
+          {{ wtf.form_field(form.title) }}
+          <button class="btn btn-success" type="submit">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

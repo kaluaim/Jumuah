@@ -1,13 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Mosques list</h1>
-<a href="/mosque/add/">add new</a>
+<div class="page-header">
+  <h1>قائمة الجوامع</h1>
+  <a class="btn btn-default pull-left" href="/mosque/add/" role="button">إضافة <i class="fa fa-plus"></i></a>
+</div>
+
 {% if mosques %}
-<ul>
-{% for mosque in mosques %}
-<li><a href="/mosque/{{ mosque.id }}">{{ mosque.name }}</a></li>
-{% endfor %}
-</ul>
+<div class="mosques">
+  <ul>
+  {% for mosque in mosques %}
+  <li>
+    <div class="col-md-3"><a href="/mosque/{{ mosque.id }}">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          {{ mosque.name }}
+        </div>
+      </div></a>
+    </div>
+  </li>
+  {% endfor %}
+  </ul>
+</div>
+{% else %}
+<h1>هناك مشكلة!</h1>
 {% endif %}
 {% endblock %}

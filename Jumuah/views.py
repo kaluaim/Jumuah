@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import render_template, redirect, url_for, request, flash
 from app import app, db, login_manager
 from forms import LoginForm, RegisterForm, AddMosqueForm, CreateTopic
@@ -45,19 +46,10 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/mosque/')
-@app.route('/mosque/<int:mosque_id>/', methods=['GET', 'POST'])
+@app.route('/mosque/<int:mosque_id>/', methods=['GET'])
 def mosque(mosque_id=-1):
     if mosque_id is not -1:
         form = CreateTopic(request.form)
-        if form.validate_on_submit():
-            topic = Topic(
-                title=form.title.data,
-                user_created_id=current_user.id,
-                mosque_id=mosque_id
-            )
-            db.session.add(topic)
-            db.session.commit()
-            flash('Topic added', 'success')
         mosque = Mosque.query.filter_by(id=mosque_id).first_or_404()
         return render_template('mosque.html', mosque=mosque, form=form)
     else:
@@ -78,11 +70,31 @@ def add_mosque():
         )
         db.session.add(mosque)
         db.session.commit()
-        flash('Mosque been added', 'success')
+        flash('تم إضافة الجامع بنجاح.', 'success')
         return redirect(url_for('mosque'))
     return render_template('mosque_add.html', form=form)
 
-@app.route('/mosque/<int:mosque_id>/<int:topic_id>/vote', methods=['GET'])
+@app.route('/mosque/<int:mosque_id>/topic/', methods=['POST'])
+@login_required
+def add_topic(mosque_id=-1):
+    if mosque_id is not -1:
+        form = CreateTopic(request.form)
+        if form.validate_on_submit():
+            topic = Topic(
+                title=form.title.data,
+                user_created_id=current_user.id,
+                mosque_id=mosque_id
+            )
+            db.session.add(topic)
+            db.session.commit()
+            flash('تم إضافة الموضوع بنجاح.', 'success')
+        return redirect(url_for('mosque', mosque_id=mosque_id))
+    else:
+        mosques = Mosque.query.all()
+        return render_template('mosques.html/', mosques=mosques)
+
+@app.route('/mosque/<int:mosque_id>/<int:topic_id>/vote/', methods=['GET'])
+@login_required
 def vote(mosque_id=-1, topic_id=-1):
     if mosque_id is not -1 and topic_id is not -1:
         vote = Vote(
