@@ -1,6 +1,13 @@
 import datetime
 from flask.ext.login import UserMixin
-from app import db, login_manager
+from app import app, db, login_manager
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -97,3 +104,7 @@ class Topic(db.Model):
 
     def __repr__(self):
         return '<Topic (title={})>'.format(self.title)
+
+
+if __name__ == '__main__':
+    manager.run()
