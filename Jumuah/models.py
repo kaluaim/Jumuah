@@ -24,13 +24,13 @@ class User(UserMixin, db.Model):
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
 
-    def __init__(self, password, mobile, name='', admin=False):
+    def __init__(self, password, mobile, name='', is_admin=False):
         self.name = name
         self.password = password
         self.mobile = mobile
         self.date_joined = datetime.datetime.now()
         self.last_login = datetime.datetime.now()
-        self.admin = admin
+        self.is_admin = is_admin
 
     def __repr__(self):
         return '<User (name={}, password={}, email={})>'.format(self.name,
