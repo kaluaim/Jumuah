@@ -12,16 +12,16 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
     password = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
+    mobile = db.Column(db.Integer, nullable=False)
     date_joined = db.Column(db.DateTime, nullable=False)
     last_login = db.Column(db.DateTime, nullable=False)
-    admin = db.Column(db.Boolean, nullable=False, default=False)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
 
-    def __init__(self, password, email, name='', admin=False):
+    def __init__(self, password, mobile, name='', admin=False):
         self.name = name
         self.password = password
-        self.email = email
+        self.mobile = mobile
         self.date_joined = datetime.datetime.now()
         self.last_login = datetime.datetime.now()
         self.admin = admin
