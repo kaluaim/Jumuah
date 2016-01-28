@@ -34,7 +34,7 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User (name={}, password={}, email={})>'.format(self.name,
-            self.password, self.email)
+            self.password, self.mobile)
 
     def is_authenticated(self):
         return True
