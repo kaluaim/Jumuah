@@ -1,9 +1,8 @@
 import datetime
 from flask.ext.login import UserMixin
-from app import app, db, login_manager
+from app import app, db, login_manager, bcrypt
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from flask.ext.bcrypt import Bcrypt
 
 migrate = Migrate(app, db)
 manager = Manager(app)
@@ -18,7 +17,7 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
-    password = db.Column(db.String)
+    password_hash = db.Column(db.String)
     email = db.Column(db.String)
     mobile = db.Column(db.Integer, nullable=False)
     date_joined = db.Column(db.DateTime, nullable=False)
@@ -30,7 +29,7 @@ class User(UserMixin, db.Model):
     def __init__(self, password, mobile, email='', name='', is_admin=False, is_active=False):
         self.name = name
         self.email = email
-        self.password = password
+        self.password_hash = bcrypt.generate_password_hash(password)
         self.mobile = mobile
         self.date_joined = datetime.datetime.now()
         self.last_login = datetime.datetime.now()

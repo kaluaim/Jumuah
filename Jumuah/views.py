@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, redirect, url_for, request, flash
-from app import app, db, login_manager
+from app import app, db, login_manager, bcrypt
 from forms import LoginForm, RegisterForm, AddMosqueForm, CreateTopic
 from flask.ext.login import login_user, logout_user, login_required, current_user
 from models import User, Mosque, Topic, Vote
@@ -14,12 +14,12 @@ def login():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and user.password == form.password.data:
+        if user and bcrypt.check_password_hash(user.password_hash, form.password.data):
             login_user(user)
-            flash('You are logged in, welcome', 'success')
+            flash('تم تسجيل دخولك بنجاح', 'success')
             return redirect(url_for('index'))
         else:
-            flash('Invalid email and/or password', 'danger')
+            flash('خطاء بتسجيل الدخول', 'danger')
             return render_template('login.html', form=form)
     return render_template('login.html', form=form)
 
