@@ -1,4 +1,5 @@
 Flask==0.10.1
+Flask-Bcrypt==0.7.1
 Flask-Bootstrap==3.3.5.7
 Flask-Login==0.3.2
 Flask-Migrate==1.7.0

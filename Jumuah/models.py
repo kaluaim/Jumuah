@@ -3,6 +3,7 @@ from flask.ext.login import UserMixin
 from app import app, db, login_manager
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
+from flask.ext.bcrypt import Bcrypt
 
 migrate = Migrate(app, db)
 manager = Manager(app)
@@ -17,30 +18,34 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
-    password = db.Column(db.String, nullable=False)
+    password = db.Column(db.String)
+    email = db.Column(db.String)
     mobile = db.Column(db.Integer, nullable=False)
     date_joined = db.Column(db.DateTime, nullable=False)
     last_login = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
+    is_active = db.Column(db.Boolean, nullable=False, default=False)
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
 
-    def __init__(self, password, mobile, name='', is_admin=False):
+    def __init__(self, password, mobile, email='', name='', is_admin=False, is_active=False):
         self.name = name
+        self.email = email
         self.password = password
         self.mobile = mobile
         self.date_joined = datetime.datetime.now()
         self.last_login = datetime.datetime.now()
         self.is_admin = is_admin
+        self.is_active = is_active
 
     def __repr__(self):
-        return '<User (name={}, password={}, email={})>'.format(self.name,
-            self.password, self.mobile)
+        return '<User (name={}, password={}, email={}, mobile={})>'.format(self.name,
+            self.password, self.email, self.mobile)
 
     def is_authenticated(self):
         return True
 
     def is_active(self):
-        return True
+        return self.is_active
 
     def is_anonymous(self):
         return False
