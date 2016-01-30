@@ -15,6 +15,7 @@ def load_user(user_id):
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
     password_hash = db.Column(db.String)
@@ -56,6 +57,7 @@ class User(UserMixin, db.Model):
 
 class Mosque(db.Model):
     __tablename__ = 'mosques'
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     country = db.Column(db.String, nullable=False)
@@ -79,6 +81,7 @@ class Mosque(db.Model):
 
 class Vote(db.Model):
     __tablename__ = 'votes'
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -95,6 +98,7 @@ class Vote(db.Model):
 
 class Topic(db.Model):
     __tablename__ = 'topics'
+    
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String, nullable=False)
     mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))

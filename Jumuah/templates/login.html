@@ -9,16 +9,32 @@
         <h3 class="panel-title">دخول</h3>
       </div>
       <div class="panel-body">
-        <form class="form" role="form" method="post" action="">
-          {{ form.csrf_token }}
-          {{ form.hidden_tag() }}
-          {{ wtf.form_errors(form, hiddens="only") }}
-          {{ wtf.form_field(form.email) }}
-          {{ wtf.form_field(form.password) }}
-          <button class="btn btn-success" type="submit">دخول</button>
+        <div>
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#mobile" aria-controls="mobile" role="tab" data-toggle="tab">الجوال</a></li>
+            <li role="presentation"><a href="#email" aria-controls="email" role="tab" data-toggle="tab">الايميل</a></li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="mobile">
+              <h2>mobile login</h2>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="email">
+              <br><br>
+              <form class="form" role="form" method="post" action="">
+                {{ form.csrf_token }}
+                {{ form.hidden_tag() }}
+                {{ wtf.form_errors(form, hiddens="only") }}
+                {{ wtf.form_field(form.email) }}
+                {{ wtf.form_field(form.password) }}
+                <button class="btn btn-success" type="submit">دخول</button>
+              </form>
+            </div>
+          </div>
           <br><br>
           <p>لا تملك حساب؟ <a href="{{ url_for('register') }}">فضلا قم بالتسجيل</a></p>
-        </form>
+        </div>
       </div>
     </div>
   </div>
