@@ -18,15 +18,16 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
     password_hash = db.Column(db.String)
-    email = db.Column(db.String)
-    mobile = db.Column(db.Integer, nullable=False)
+    email = db.Column(db.String, unique=True)
+    mobile = db.Column(db.Integer, nullable=False, unique=True)
     date_joined = db.Column(db.DateTime, nullable=False)
     last_login = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     is_active = db.Column(db.Boolean, nullable=False, default=False)
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
 
-    def __init__(self, password, mobile, email='', name='', is_admin=False, is_active=False):
+    def __init__(self, password, mobile, email='', name='', is_admin=False,
+                is_active=False):
         self.name = name
         self.email = email
         self.password_hash = bcrypt.generate_password_hash(password)
@@ -37,8 +38,8 @@ class User(UserMixin, db.Model):
         self.is_active = is_active
 
     def __repr__(self):
-        return '<User (name={}, password={}, email={}, mobile={})>'.format(self.name,
-            self.password, self.email, self.mobile)
+        return '<User (name={}, password={}, email={}, mobile={})>'.format(
+                self.name, self.password, self.email, self.mobile)
 
     def is_authenticated(self):
         return True
