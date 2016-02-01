@@ -25,6 +25,8 @@ class User(UserMixin, db.Model):
     last_login = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
+    otp = db.relationship('OTP', backref='user', lazy='dynamic',
+                            uselist=False)
 
     def __init__(self, password, mobile, email='', name='', is_admin=False):
         self.name = name
@@ -50,6 +52,43 @@ class User(UserMixin, db.Model):
 
     def get_id(self):
         return self.id
+
+
+class OTP(db.Model):
+    __tablename__ = 'otps'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    otp = db.Column(db.Integer, nullable=False)
+    expires_at = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, otp, expires_at, user_id):
+        self.otp = otp
+        self.expires_at = expires_at
+        self.user_id = user_id
+
+    def __repr__(self):
+        return '<OTP (otp={}, expires_at={}, user_id={})>'.formate(self.otp,
+                self.expires_at, self.user_id)
+
+
+
+class Token(db.Model):
+    __tablename__ = 'tokens'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    token = db.Column(db.String, nullable=False)
+    expires_at = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, token, expires_at, user_id):
+        self.token = token
+        self.expires_at = expires_at
+        self.user_id = user_id
+
+    def __repr__(self):
+        return '<Token (token={}, expires_at={}, user_id={})>'.formate(
+                self.token, self.expires_at, self.user_id)
 
 
 class Mosque(db.Model):
