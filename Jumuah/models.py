@@ -20,7 +20,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String)
     password_hash = db.Column(db.String)
     email = db.Column(db.String, unique=True)
-    mobile = db.Column(db.Integer, nullable=False, unique=True)
+    country_code = db.Column(db.String, nullable=False)
+    phone = db.Column(db.String, nullable=False, unique=True)
     date_joined = db.Column(db.DateTime, nullable=False)
     last_login = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
@@ -58,21 +59,17 @@ class User(UserMixin, db.Model):
 class OTP(db.Model):
     __tablename__ = 'otps'
 
-    TYPES = (
-        'sms',
-        'email'
-    )
-    
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    type = db.Column(db.Enum(*TYPES, name='type'))
-    otp = db.Column(db.Integer, nullable=False)
+    otp_type = db.Column(db.String)
+    otp_num = db.Column(db.Integer, nullable=False)
     expires_at = db.Column(db.DateTime, nullable=False)
     attempt = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, otp, expires_at, user_id):
-        self.otp = otp
+    def __init__(self, otp_num, expires_at, user_id, otp_type='sms'):
+        self.otp_num = otp_num
         self.expires_at = expires_at
+        self.otp_type = otp_type
         self.user_id = user_id
 
     def __repr__(self):

@@ -30,14 +30,18 @@ def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         user = User(
-            password=form.password.data,
-            email=form.email.data
+            country_code=form.country_code.data,
+            phone=form.phone.data
         )
         db.session.add(user)
         db.session.commit()
-        login_user(user)
-        flash('Thank you for registering.', 'success')
-        return redirect(url_for('index'))
+
+        # generate otp and add it to db
+
+        #login_user(user)
+        #flash('Thank you for registering.', 'success')
+        #return redirect(url_for('index'))
+        #we shoud redirect to otp page 
     return render_template('register.html', form=form)
 
 @app.route('/logout/', methods=['GET'])

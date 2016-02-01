@@ -10,20 +10,13 @@ class LoginForm(Form):
 
 
 class RegisterForm(Form):
-    email = TextField(
-        'البريد الإلكتروني',
-        validators=[DataRequired(), Email(message=None), Length(min=6, max=40)]
+    country_code = TextField(
+        'رمز الدولة',
+        validators=[DataRequired(), Length(min=1, max=5)]
     )
-    password = PasswordField(
-        'كلمة المرور',
-        validators=[DataRequired(), Length(min=6, max=25)]
-    )
-    confirm = PasswordField(
-        'تأكيد كلمة المرور',
-        validators=[
-            DataRequired(),
-            EqualTo('password', message='Passwords must match.')
-        ]
+    phone = TextField(
+        'الجوال',
+        validators=[DataRequired(), Length(min=9, max=9)]
     )
 
 
