@@ -24,11 +24,9 @@ class User(UserMixin, db.Model):
     date_joined = db.Column(db.DateTime, nullable=False)
     last_login = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
-    is_active = db.Column(db.Boolean, nullable=False, default=False)
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
 
-    def __init__(self, password, mobile, email='', name='', is_admin=False,
-                is_active=False):
+    def __init__(self, password, mobile, email='', name='', is_admin=False):
         self.name = name
         self.email = email
         self.password_hash = bcrypt.generate_password_hash(password)
@@ -36,7 +34,6 @@ class User(UserMixin, db.Model):
         self.date_joined = datetime.datetime.now()
         self.last_login = datetime.datetime.now()
         self.is_admin = is_admin
-        self.is_active = is_active
 
     def __repr__(self):
         return '<User (name={}, password={}, email={}, mobile={})>'.format(
@@ -46,7 +43,7 @@ class User(UserMixin, db.Model):
         return True
 
     def is_active(self):
-        return self.is_active
+        return True
 
     def is_anonymous(self):
         return False
@@ -98,7 +95,7 @@ class Vote(db.Model):
 
 class Topic(db.Model):
     __tablename__ = 'topics'
-    
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String, nullable=False)
     mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))

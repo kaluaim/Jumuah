@@ -2,7 +2,8 @@
 from flask import render_template, redirect, url_for, request, flash
 from app import app, db, login_manager, bcrypt
 from forms import LoginForm, RegisterForm, AddMosqueForm, CreateTopic
-from flask.ext.login import login_user, logout_user, login_required, current_user
+from flask.ext.login import (login_user, logout_user, login_required,
+                            current_user)
 from models import User, Mosque, Topic, Vote
 
 @app.route('/')
@@ -14,7 +15,8 @@ def login():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password_hash, form.password.data):
+        if user and bcrypt.check_password_hash(user.password_hash,
+                    form.password.data):
             login_user(user)
             flash('تم تسجيل دخولك بنجاح', 'success')
             return redirect(url_for('index'))
