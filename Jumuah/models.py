@@ -27,6 +27,7 @@ class User(UserMixin, db.Model):
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
     otp = db.relationship('OTP', backref='user', lazy='dynamic',
                             uselist=False)
+    token = db.relationship('Token', backref='user', lazy='dynamic')
 
     def __init__(self, password, mobile, email='', name='', is_admin=False):
         self.name = name
@@ -57,9 +58,16 @@ class User(UserMixin, db.Model):
 class OTP(db.Model):
     __tablename__ = 'otps'
 
+    TYPES = (
+        'sms',
+        'email'
+    )
+    
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    type = db.Column(db.Enum(*TYPES, name='type'))
     otp = db.Column(db.Integer, nullable=False)
     expires_at = db.Column(db.DateTime, nullable=False)
+    attempt = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __init__(self, otp, expires_at, user_id):
