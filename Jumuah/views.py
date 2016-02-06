@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, redirect, url_for, request, flash
-from app import app, db, login_manager, bcrypt
+from app import app, db, login_manager, bcrypt, twilio
 from forms import (LoginForm, RegisterForm, AddMosqueForm, CreateTopic,
                    VerifyForm)
 from flask.ext.login import (login_user, logout_user, login_required,
@@ -48,12 +48,19 @@ def register():
         )
         db.session.add(otp)
         db.session.commit()
-        flash('تم إرسال رمز التحقق لجوالك', 'info')
+        #send sms
+        to = user.country_code + user.phone
+        msg = str(otp_num)
+        print(to)
+        message = twilio.sms.messages.create(to=to, from_="++33756796123",
+                    body=msg)
+        print(message)
+        flash('تم إرسال رمز التحقق لجوال رقم ({})'.format(user.country_code+
+                user.phone), 'info')
         return redirect(url_for('verify'))
         #login_user(user)
         #flash('Thank you for registering.', 'success')
         #return redirect(url_for('index'))
-        #we shoud redirect to otp page
     return render_template('register.html', form=form)
 
 

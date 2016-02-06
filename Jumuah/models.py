@@ -30,10 +30,8 @@ class User(UserMixin, db.Model):
     otp = db.relationship('OTP', backref='user', lazy='dynamic')
     token = db.relationship('Token', backref='user', lazy='dynamic')
 
-    def __init__(self, country_code, phone, email='', name='', is_admin=False,
+    def __init__(self, country_code, phone, is_admin=False,
                 is_email_confirmed=False):
-        self.name = name
-        self.email = email
         self.country_code = country_code
         self.phone = phone
         self.date_joined = datetime.datetime.now()
