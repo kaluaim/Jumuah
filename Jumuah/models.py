@@ -20,6 +20,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String)
     password_hash = db.Column(db.String)
     email = db.Column(db.String, unique=True)
+    is_email_confirmed = db.Column(db.Boolean, nullable=False, default=False)
     country_code = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, nullable=False, unique=True)
     date_joined = db.Column(db.DateTime, nullable=False)
@@ -30,7 +31,8 @@ class User(UserMixin, db.Model):
                             uselist=False)
     token = db.relationship('Token', backref='user', lazy='dynamic')
 
-    def __init__(self, password, mobile, email='', name='', is_admin=False):
+    def __init__(self, password, mobile, email='', name='', is_admin=False,
+                is_email_confirmed=False):
         self.name = name
         self.email = email
         self.password_hash = bcrypt.generate_password_hash(password)
@@ -38,6 +40,7 @@ class User(UserMixin, db.Model):
         self.date_joined = datetime.datetime.now()
         self.last_login = datetime.datetime.now()
         self.is_admin = is_admin
+        self.is_email_confirmed = is_email_confirmed
 
     def __repr__(self):
         return '<User (name={}, password={}, email={}, mobile={})>'.format(

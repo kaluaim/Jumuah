@@ -20,6 +20,10 @@ class RegisterForm(Form):
     )
 
 
+class VerifyForm(Form):
+
+
+
 class AddMosqueForm(Form):
     name = TextField(
         'اسم الجامع',

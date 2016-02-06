@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">تحقق</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form" role="form" method="post" action="">
+          {{ form.csrf_token }}
+          {{ form.hidden_tag() }}
+          {{ wtf.form_errors(form, hiddens="only") }}
+          {{ wtf.form_field(form.country_code) }}
+          {{ wtf.form_field(form.phone) }}
+          <button class="btn btn-success" type="submit">سجل</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+{% endblock content %}
