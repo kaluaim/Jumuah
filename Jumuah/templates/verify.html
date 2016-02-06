@@ -13,9 +13,8 @@
           {{ form.csrf_token }}
           {{ form.hidden_tag() }}
           {{ wtf.form_errors(form, hiddens="only") }}
-          {{ wtf.form_field(form.country_code) }}
-          {{ wtf.form_field(form.phone) }}
-          <button class="btn btn-success" type="submit">سجل</button>
+          {{ wtf.form_field(form.otp_num) }}
+          <button class="btn btn-success" type="submit">تحقق</button>
         </form>
       </div>
     </div>

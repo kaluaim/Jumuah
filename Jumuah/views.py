@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, redirect, url_for, request, flash
 from app import app, db, login_manager, bcrypt
-from forms import LoginForm, RegisterForm, AddMosqueForm, CreateTopic
+from forms import (LoginForm, RegisterForm, AddMosqueForm, CreateTopic,
+                   VerifyForm)
 from flask.ext.login import (login_user, logout_user, login_required,
                             current_user)
-from models import User, Mosque, Topic, Vote
+from models import User, Mosque, Topic, Vote, OTP
+from random import randint
+from datetime import datetime, timedelta
 
 @app.route('/')
 def index():
@@ -37,12 +40,31 @@ def register():
         db.session.commit()
 
         # generate otp and add it to db
-
+        otp_num = randint(10000, 99999)
+        otp = OTP(
+            otp_num = otp_num,
+            expires_at = (datetime.now() + timedelta(minutes = 3)),
+            user_id = user.id
+        )
+        db.session.add(otp)
+        db.session.commit()
+        flash('تم إرسال رمز التحقق لجوالك', 'info')
+        return redirect(url_for('verify'))
         #login_user(user)
         #flash('Thank you for registering.', 'success')
         #return redirect(url_for('index'))
-        #we shoud redirect to otp page 
+        #we shoud redirect to otp page
     return render_template('register.html', form=form)
+
+
+@app.route('/verify', methods=['GET', 'POST'])
+def verify():
+    form = VerifyForm(request.form)
+    if form.validate_on_submit():
+        pass
+        #check otp if correct redirect to index and Login
+        #else return to page with error msg
+    return render_template('verify.html', form=form)
 
 @app.route('/logout/', methods=['GET'])
 @login_required

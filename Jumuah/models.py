@@ -27,16 +27,15 @@ class User(UserMixin, db.Model):
     last_login = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
-    otp = db.relationship('OTP', backref='user', lazy='dynamic',
-                            uselist=False)
+    otp = db.relationship('OTP', backref='user', lazy='dynamic')
     token = db.relationship('Token', backref='user', lazy='dynamic')
 
-    def __init__(self, password, mobile, email='', name='', is_admin=False,
+    def __init__(self, country_code, phone, email='', name='', is_admin=False,
                 is_email_confirmed=False):
         self.name = name
         self.email = email
-        self.password_hash = bcrypt.generate_password_hash(password)
-        self.mobile = mobile
+        self.country_code = country_code
+        self.phone = phone
         self.date_joined = datetime.datetime.now()
         self.last_login = datetime.datetime.now()
         self.is_admin = is_admin

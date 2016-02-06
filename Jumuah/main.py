@@ -1,5 +1,5 @@
 import sys
-reload(sys)  
+reload(sys)
 sys.setdefaultencoding('utf8')
 
 from app import app, db
@@ -10,4 +10,4 @@ db.create_all()
 db.session.commit()
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8088)
+    app.run(debug=True, port=8087)
