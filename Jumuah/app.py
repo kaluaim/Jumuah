@@ -4,7 +4,6 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask.ext.bcrypt import Bcrypt
-from twilio.rest import TwilioRestClient
 import nexmo
 
 app = Flask(__name__)
@@ -19,8 +18,4 @@ login_manager.login_message = u"فضلاً قم بتسجيل الدخول."
 login_manager.login_message_category = "info"
 bootstrap = Bootstrap(app)
 
-account = "ACcb954786d23cb5d29c6987c381ac824c"
-token = "4149752b6735f9dd8ce79a268b524ce6"
-twilio = TwilioRestClient(account, token)
-
-client = nexmo.Client(key='742ebb74', secret='a273d2d8')
+nexmo = nexmo.Client(key='742ebb74', secret='a273d2d8')

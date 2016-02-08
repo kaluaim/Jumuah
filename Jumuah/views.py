@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, redirect, url_for, request, flash
-from app import app, db, login_manager, bcrypt, twilio, client
+from app import app, db, login_manager, bcrypt, nexmo
 from forms import (LoginForm, RegisterForm, AddMosqueForm, CreateTopic,
                    VerifyForm)
 from flask.ext.login import (login_user, logout_user, login_required,
@@ -40,7 +40,7 @@ def register():
         db.session.commit()
 
         # generate otp and add it to db
-        otp_num = randint(10000, 99999)
+        otp_num = randint(1000, 9999)
         otp = OTP(
             otp_num = otp_num,
             expires_at = (datetime.now() + timedelta(minutes = 3)),
@@ -48,17 +48,17 @@ def register():
         )
         db.session.add(otp)
         db.session.commit()
+
         #send sms
         to = user.country_code + user.phone
         msg = str(otp_num)
         print(to)
         print(msg)
-        #message = twilio.sms.messages.create(to=to, from_="++33756796123",
-        #            body=msg)
-        client.send_message({'from': 'Python', 'to': to, 'text': msg})
+        nexmo.send_message({'from': 'Jumuah', 'to': to, 'text': msg})
         flash('تم إرسال رمز التحقق لجوال رقم ({})'.format(user.country_code+
                 user.phone), 'info')
-        return redirect(url_for('verify'))
+        print(nexmo)
+        return redirect(url_for('verify', user_id=user.id))
         #login_user(user)
         #flash('Thank you for registering.', 'success')
         #return redirect(url_for('index'))
@@ -66,13 +66,19 @@ def register():
 
 
 @app.route('/verify', methods=['GET', 'POST'])
-def verify():
-    form = VerifyForm(request.form)
-    if form.validate_on_submit():
-        pass
-        #check otp if correct redirect to index and Login
-        #else return to page with error msg
-    return render_template('verify.html', form=form)
+def verify(user_id=-1):
+    if user_id is not -1:
+        form = VerifyForm(request.form)
+
+        if form.validate_on_submit():
+            user = User.query.filter_by(id=user_id).first_or_404
+            print(user.otp.otp_num)
+
+            #check otp if correct redirect to index and Login
+            #else return to page with error msg
+        return render_template('verify.html', form=form)
+    else:
+        return redirect(url_for('index'))
 
 @app.route('/logout/', methods=['GET'])
 @login_required
