@@ -23,7 +23,7 @@ class RegisterForm(Form):
 class VerifyForm(Form):
     otp_num = TextField(
         'رمز التحقق',
-        validators=[DataRequired, Length(min=5, max=5)]
+        validators=[DataRequired(), Length(min=4, max=4)]
     )
 
 

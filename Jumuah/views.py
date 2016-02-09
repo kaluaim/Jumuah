@@ -57,7 +57,7 @@ def register():
         nexmo.send_message({'from': 'Jumuah', 'to': to, 'text': msg})
         flash('تم إرسال رمز التحقق لجوال رقم ({})'.format(user.country_code+
                 user.phone), 'info')
-        print(nexmo)
+        print(user.id)
         return redirect(url_for('verify', user_id=user.id))
         #login_user(user)
         #flash('Thank you for registering.', 'success')
@@ -65,14 +65,19 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/verify', methods=['GET', 'POST'])
+@app.route('/verify/<int:user_id>', methods=['GET', 'POST'])
 def verify(user_id=-1):
+    print('user id:'+str(user_id))
     if user_id is not -1:
         form = VerifyForm(request.form)
 
         if form.validate_on_submit():
-            user = User.query.filter_by(id=user_id).first_or_404
-            print(user.otp.otp_num)
+
+            user = User.query.filter_by(id=user_id).first_or_404()
+            otp = OTP.query.filter_by(user_id=user.id).first_or_404()
+            print('after gettig user'+str(user.id))
+
+            print(str(otp.otp_num))
 
             #check otp if correct redirect to index and Login
             #else return to page with error msg
