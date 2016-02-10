@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, redirect, url_for, request, flash
 from app import app, db, login_manager, bcrypt, nexmo
-from forms import (LoginForm, RegisterForm, AddMosqueForm, CreateTopic,
-                   VerifyForm)
+from forms import (LoginEmailForm, LoginMobileForm, RegisterForm,
+                   AddMosqueForm, CreateTopic, VerifyForm)
 from flask.ext.login import (login_user, logout_user, login_required,
                             current_user)
 from models import User, Mosque, Topic, Vote, OTP
@@ -15,18 +15,47 @@ def index():
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    form = LoginForm(request.form)
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+    email_form = LoginEmailForm()
+    mobile_form = LoginMobileForm()
+
+    if email_form.validate_on_submit():
+        user = User.query.filter_by(email=email_form.email.data).first()
         if user and bcrypt.check_password_hash(user.password_hash,
-                    form.password.data):
+                    email_form.password.data):
             login_user(user)
             flash('تم تسجيل دخولك بنجاح', 'success')
             return redirect(url_for('index'))
         else:
             flash('خطاء بتسجيل الدخول', 'danger')
-            return render_template('login.html', form=form)
-    return render_template('login.html', form=form)
+
+    if mobile_form.validate_on_submit():
+        user = User.query.filter_by(phone=mobile_form.phone.data).first()
+        if user:
+            # generate otp and add it to db
+            otp_num = randint(1000, 9999)
+            otp = OTP(
+                otp_num = otp_num,
+                expires_at = (datetime.now() + timedelta(minutes = 3)),
+                user_id = user.id
+            )
+            db.session.add(otp)
+            db.session.commit()
+
+            #send sms
+            to = user.country_code + user.phone
+            msg = str(otp_num)
+            print(to)
+            print(msg)
+            nexmo.send_message({'from': '12076138822', 'to': to, 'text': msg})
+            flash('تم إرسال رمز التحقق لجوال رقم ({})'.format(user.country_code+
+                    user.phone), 'info')
+            print(user.id)
+            return redirect(url_for('verify', user_id=user.id))
+        else:
+            flash('خطاء بتسجيل الدخول', 'danger')
+
+    return render_template('login.html', email_form=email_form,
+                           mobile_form=mobile_form)
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():

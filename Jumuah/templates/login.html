@@ -18,16 +18,24 @@
           <!-- Tab panes -->
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="mobile">
-              <h2>mobile login</h2>
+              <br><br>
+              <form class="form" role="form" method="post" action="">
+                {{ mobile_form.csrf_token }}
+                {{ mobile_form.hidden_tag() }}
+                {{ wtf.form_errors(mobile_form, hiddens="only") }}
+                {{ wtf.form_field(mobile_form.country_code) }}
+                {{ wtf.form_field(mobile_form.phone) }}
+                <button class="btn btn-success" type="submit">دخول</button>
+              </form>
             </div>
             <div role="tabpanel" class="tab-pane" id="email">
               <br><br>
               <form class="form" role="form" method="post" action="">
-                {{ form.csrf_token }}
-                {{ form.hidden_tag() }}
-                {{ wtf.form_errors(form, hiddens="only") }}
-                {{ wtf.form_field(form.email) }}
-                {{ wtf.form_field(form.password) }}
+                {{ email_form.csrf_token }}
+                {{ email_form.hidden_tag() }}
+                {{ wtf.form_errors(email_form, hiddens="only") }}
+                {{ wtf.form_field(email_form.email) }}
+                {{ wtf.form_field(email_form.password) }}
                 <button class="btn btn-success" type="submit">دخول</button>
               </form>
             </div>

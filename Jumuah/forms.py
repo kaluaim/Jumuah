@@ -4,9 +4,20 @@ from wtforms import TextField, PasswordField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 
-class LoginForm(Form):
+class LoginEmailForm(Form):
     email = TextField('البريد الإلكتروني', [DataRequired(), Email()])
     password = PasswordField('كلمة المرور', [DataRequired()])
+
+
+class LoginMobileForm(Form):
+    country_code = TextField(
+        'رمز الدولة',
+        validators=[DataRequired(), Length(min=1, max=5)]
+    )
+    phone = TextField(
+        'الجوال',
+        validators=[DataRequired(), Length(min=9, max=9)]
+    )
 
 
 class RegisterForm(Form):
