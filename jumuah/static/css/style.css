@@ -19,18 +19,26 @@ html, body {
 
 #main {
   overflow:auto;
-	padding-bottom: 80px; /* must be same height as the footer */
+	padding-bottom: 48px; /* must be same height as the footer */
 }
 
 footer {
   position: relative;
-	margin-top: -80px; /* negative value of footer height */
-	height: 80px;
+	margin-top: -48px; /* negative value of footer height */
+	height: 48px;
 	clear:both;
+}
+
+.navbar {
+  border-radius: 0px;
 }
 
 .navbar-default {
     background-color: #ffffff;
+}
+
+.navbar-footer {
+  margin-bottom: 0;
 }
 
 .navbar-brand img {

@@ -139,9 +139,8 @@ def add_mosque():
         mosque = Mosque(
             name=form.name.data,
             country=form.country.data,
-            province=form.province.data,
-            city=form.city.data,
-            district=form.district.data
+            latitude=form.latitude.data,
+            longitude=form.longitude.data,
         )
         db.session.add(mosque)
         db.session.commit()
