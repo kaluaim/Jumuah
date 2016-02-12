@@ -1,6 +1,7 @@
 Flask==0.10.1
 Flask-Bcrypt==0.7.1
 Flask-Bootstrap==3.3.5.7
+Flask-GoogleMaps==0.1.9
 Flask-Login==0.3.2
 Flask-Migrate==1.7.0
 Flask-SQLAlchemy==2.1
