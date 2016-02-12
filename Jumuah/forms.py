@@ -47,16 +47,12 @@ class AddMosqueForm(Form):
         'الدولة',
         validators=[DataRequired()]
     )
-    province = TextField(
+    latitude = TextField(
         'المنطقة',
         validators=[DataRequired()]
     )
-    city = TextField(
+    longitude = TextField(
         'المدينة',
-        validators=[DataRequired()]
-    )
-    district = TextField(
-        'الحي',
         validators=[DataRequired()]
     )
 

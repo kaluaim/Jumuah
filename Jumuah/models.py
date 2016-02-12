@@ -102,18 +102,16 @@ class Mosque(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     country = db.Column(db.String, nullable=False)
-    province = db.Column(db.String, nullable=False)
-    city = db.Column(db.String, nullable=False)
-    district = db.Column(db.String, nullable=False)
+    latitude = db.Column(db.String, nullable=False)
+    longitude = db.Column(db.String, nullable=False)
     date_added = db.Column(db.DateTime, nullable=False)
     topics = db.relationship('Topic', backref='mosque', lazy='dynamic')
 
-    def __init__(self, name, country, province, city, district):
+    def __init__(self, name, country, latitude, longitude):
         self.name = name
         self.country = country
-        self.province = province
-        self.city = city
-        self.district = district
+        self.latitude = latitude
+        self.longitude = longitude
         self.date_added = datetime.datetime.now()
 
     def __repr__(self):
