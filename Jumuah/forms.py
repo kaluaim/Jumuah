@@ -48,11 +48,11 @@ class AddMosqueForm(Form):
         validators=[DataRequired()]
     )
     latitude = TextField(
-        'المنطقة',
+        'خط الطول',
         validators=[DataRequired()]
     )
     longitude = TextField(
-        'المدينة',
+        'خط العرض',
         validators=[DataRequired()]
     )
 
