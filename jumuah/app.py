@@ -8,7 +8,8 @@ from flask.ext.googlemaps import GoogleMaps
 import nexmo
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../jumuah.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../jumuah.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://lavgzbxjqlczow:l2csttA5-jBSa7C_cN30AFOodp@ec2-107-21-106-196.compute-1.amazonaws.com:5432/d3gr42ujltc5eq'
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
