@@ -9,6 +9,5 @@ from views import *
 db.create_all()
 db.session.commit()
 
-
 if __name__ == '__main__':
     app.run(debug=True, port=8082)
