@@ -21,9 +21,15 @@
         </form>
       </div>
       <div class="col-md-6">
-        <h1>Google maps</h1>
+        <div id="map" style="width: 100%; height: 400px"></div>
       </div>
     </div>
   </div>
 </div>
+
+<script async defer
+  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyApYOChVdCyTfGkZKwpOa0GWxERaAmRNvI&language=ar&callback=initMap"
+  type="text/javascript">
+</script>
+
 {% endblock content %}
