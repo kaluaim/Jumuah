@@ -16,7 +16,7 @@
 
 <body>
   <header>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -31,7 +31,13 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-left">
             {% if current_user.is_authenticated %}
-            <li><a href="#">اهلا {{ current_user.email }}</a></li>
+            <li><a href="#">اهلا
+            {% if current_user.name %}
+              {{ current_user.name }}
+            {% else %}
+              {{ current_user.country_code }}{{ current_user.phone }}
+            {% endif %}
+            </a></li>
             <li><a href="/logout/"><i class="fa fa-sign-out"></i> خروج</a></li>
             {% else %}
             <li><a href="/login/"><i class="fa fa-sign-in"></i> دخول</a></li>

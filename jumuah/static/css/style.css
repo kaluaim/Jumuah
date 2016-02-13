@@ -9,6 +9,7 @@ html, body {
   font-weight: normal;
   font-style: normal;
   background: #ffffff;
+  padding-top: 40px;
 }
 
 #wrap {
@@ -24,7 +25,7 @@ html, body {
 
 footer {
   position: relative;
-	margin-top: -48px; /* negative value of footer height */
+	margin-top: 30px; /* negative value of footer height */
 	height: 48px;
 	clear:both;
 }
