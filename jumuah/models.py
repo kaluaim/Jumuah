@@ -105,14 +105,17 @@ class Mosque(db.Model):
     latitude = db.Column(db.String, nullable=False)
     longitude = db.Column(db.String, nullable=False)
     date_added = db.Column(db.DateTime, nullable=False)
+    imam_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     topics = db.relationship('Topic', backref='mosque', lazy='dynamic')
+    is_active = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, name, country, latitude, longitude):
+    def __init__(self, name, country, latitude, longitude, is_active=False):
         self.name = name
         self.country = country
         self.latitude = latitude
         self.longitude = longitude
         self.date_added = datetime.datetime.now()
+        self.is_active = is_active
 
     def __repr__(self):
         return '<Mosque (name={})>'.format(self.name)
@@ -140,17 +143,44 @@ class Topic(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String, nullable=False)
+    description = db.Column(db.String)
     mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))
     user_created_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    date_added = db.Column(db.DateTime, nullable=False)
     votes = db.relationship('Vote', backref='topic', lazy='dynamic')
+    # statuses: new, ignore, future
+    status = db.Column(db.String)
 
-    def __init__(self, title, user_created_id, mosque_id):
+    def __init__(self, title, description, user_created_id, mosque_id, status='new'):
         self.title = title
+        self.description = description
         self.user_created_id=user_created_id
         self.mosque_id = mosque_id
+        self.date_added = datetime.datetime.now()
+        self.status = status
 
     def __repr__(self):
         return '<Topic (title={})>'.format(self.title)
+
+
+class Khutbah(db.Model):
+    __tablename__ = 'khutbahs'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))
+    topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'))
+    date = db.Column(db.DateTime, nullable=False)
+    is_enforced = db.Column(db.Boolean, nullable=False, default=False)
+
+    def __init__(self, mosque_id, topic_id, date, is_enforced=False):
+        self.mosque_id = mosque_id
+        self.topic_id = topic_id
+        self.date = date
+        self.is_enforced = is_enforced
+
+    def __repr__(self):
+        return '<Khutbah (mosque_id={}, topic_id={})>'.format(self.mosque_id,
+                self.topic_id)
 
 
 if __name__ == '__main__':
