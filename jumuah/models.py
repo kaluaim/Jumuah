@@ -107,7 +107,7 @@ class Mosque(db.Model):
     date_added = db.Column(db.DateTime, nullable=False)
     imam_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     topics = db.relationship('Topic', backref='mosque', lazy='dynamic')
-    is_active = db.Column(db.Boolean, nullable=False, default=False)
+    is_active = db.Column(db.Boolean, default=False)
 
     def __init__(self, name, country, latitude, longitude, is_active=False):
         self.name = name
