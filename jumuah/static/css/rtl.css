@@ -1,0 +1,22 @@
+.top-links ul {
+    float: left;
+}
+
+@media (min-width: 768px){
+  .navbar-right {
+      float: left!important;
+      margin-right: -15px;
+  }
+}
+
+.popular-label, .rated-label, .feature-label {
+    left: 0;
+}
+
+.btn {
+    float: left;
+}
+
+select.form-control {
+    background-position: 5% 50%;
+}
