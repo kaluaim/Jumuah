@@ -22,11 +22,11 @@
           <li class="active">قائمة الجوامع</li>
         </ol>
       </div>
-      <div class="col-md-4 text-right"> <a class="btn tp-btn-link" role="button" data-toggle="collapse" href="#searchform" aria-expanded="false" aria-controls="searchform"> إظهار/إخفاء البحث </a> </div>
+      <!-- <div class="col-md-4 text-right"> <a class="btn tp-btn-link" role="button" data-toggle="collapse" href="#searchform" aria-expanded="false" aria-controls="searchform"> إظهار/إخفاء البحث </a> </div> -->
     </div>
   </div>
 </div>
-<div class="filter-box collapse in" id="searchform">
+<!-- <div class="filter-box collapse in" id="searchform">
   <div class="container">
     <div class="row filter-form">
       <div class="col-md-12">
@@ -58,267 +58,36 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
 <div class="main-container">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h2>Displaying 12 venues in your search.</h2>
-      </div>
-       <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-1.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
+        <h2>تم إسترجاع {{ mosques | count }} جامع.</h2>
       </div>
 
-      <!-- /.venue box start-->
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-2.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
+      {% if mosques %}
+        {% for mosque in mosques %}
+        <div class="col-md-3 vendor-box"><!-- venue box start-->
+         <div class="vendor-image"><!-- venue pic -->
+           <a href="#"><img src="/static/images/vendor-1.jpg" alt="wedding venue" class="img-responsive"></a>
+         </div>
+         <!-- /.venue pic -->
+         <div class="vendor-detail"><!-- venue details -->
+           <div class="caption"><!-- caption -->
+             <h2><a href="/mosques/{{ mosque.id }}" class="title">{{ mosque.name }}</a></h2>
+             <p class="location"><i class="fa fa-map-marker"></i> {{ mosque.country }}</p>
+              </div>
+         <!-- venue details -->
+         </div>
+        {% endfor %}
+      {% else %}
+      <h1>هناك مشكلة!</h1>
+      {% endif %}
 
-      <!-- /.venue box start-->
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-3.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-
-      <!-- /.venue box start-->
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-4.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-      <!-- /.venue box start-->
-
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-5.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-
-      <!-- /.venue box start-->
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-6.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-
-      <!-- /.venue box start-->
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-7.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-
-      <!-- /.venue box start-->
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-8.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-      <!-- /.venue box start-->
-
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-1.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-
-      <!-- /.venue box start-->
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-4.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-
-      <!-- /.venue box start-->
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-2.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-
-      <!-- /.venue box start-->
-      <div class="col-md-3 vendor-box"><!-- venue box start-->
-        <div class="vendor-image"><!-- venue pic -->
-          <a href="#"><img src="/static/images/vendor-5.jpg" alt="wedding venue" class="img-responsive"></a>
-          <div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a></div>
-        </div>
-        <!-- /.venue pic -->
-        <div class="vendor-detail"><!-- venue details -->
-          <div class="caption"><!-- caption -->
-            <h2><a href="#" class="title">Venue Vendor Title</a></h2>
-            <p class="location"><i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.</p>
-            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span> </div>
-             </div>
-          <!-- /.caption -->
-          <div class="vendor-price">
-            <div class="price">$390 - $600</div>
-          </div>
-        </div>
-        <!-- venue details -->
-      </div>
-      <!-- /.venue box start-->
 
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12 tp-pagination">
         <ul class="pagination">
           <li> <a href="#" aria-label="Previous"> <span aria-hidden="true">Previous</span> </a> </li>
@@ -330,7 +99,7 @@
           <li> <a href="#" aria-label="Next"> <span aria-hidden="true">NEXT</span> </a> </li>
         </ul>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
