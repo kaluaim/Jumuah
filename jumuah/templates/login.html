@@ -2,43 +2,42 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
-  <div class="col-md-3"></div>
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">دخول</h3>
+<div class="main-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 tp-title-center"><h1>  مرحبا بك في جمعة</h1>
+        <p>نحن سعيدون لرؤيتك مرة أخرى</p>
       </div>
-      <div class="panel-body">
-        <div>
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#mobile" aria-controls="mobile" role="tab" data-toggle="tab">الجوال</a></li>
-            <li role="presentation"><a href="#email" aria-controls="email" role="tab" data-toggle="tab">الايميل</a></li>
-          </ul>
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="mobile">
-              <br><br>
-              <form class="form" role="form" method="post" action="">
-                {{ mobile_form.csrf_token }}
-                {{ mobile_form.hidden_tag() }}
-                {{ wtf.form_errors(mobile_form, hiddens="only") }}
-                {{ wtf.form_field(mobile_form.country_code) }}
-                {{ wtf.form_field(mobile_form.phone) }}
-                <button class="btn btn-success" type="submit">دخول</button>
-              </form>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="email">
-              <br><br>
-              <form class="form" role="form" method="post" action="">
-                {{ email_form.csrf_token }}
-                {{ email_form.hidden_tag() }}
-                {{ wtf.form_errors(email_form, hiddens="only") }}
-                {{ wtf.form_field(email_form.email) }}
-                {{ wtf.form_field(email_form.password) }}
-                <button class="btn btn-success" type="submit">دخول</button>
-              </form>
-            </div>
+
+      </div>
+      <div class="col-md-offset-3 col-md-6 st-tabs">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">الجوال</a></li>
+          <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">الايميل</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content ">
+          <div role="tabpanel" class="tab-pane active vendor-login" id="home">
+            <form class="form" role="form" method="post" action="">
+              {{ mobile_form.csrf_token }}
+              {{ mobile_form.hidden_tag() }}
+              {{ wtf.form_errors(mobile_form, hiddens="only") }}
+              {{ wtf.form_field(mobile_form.country_code) }}
+              {{ wtf.form_field(mobile_form.phone) }}
+              <button class="btn tp-btn-primary tp-btn-lg" type="submit">دخول</button>
+            </form>
+          </div>
+          <div role="tabpanel" class="tab-pane couple-login" id="profile"><!-- Text input-->
+            <form class="form" role="form" method="post" action="">
+              {{ email_form.csrf_token }}
+              {{ email_form.hidden_tag() }}
+              {{ wtf.form_errors(email_form, hiddens="only") }}
+              {{ wtf.form_field(email_form.email) }}
+              {{ wtf.form_field(email_form.password) }}
+              <button class="btn tp-btn-primary tp-btn-lg" type="submit">دخول</button>
+            </form>
           </div>
           <br><br>
           <p>لا تملك حساب؟ <a href="{{ url_for('register') }}">فضلا قم بالتسجيل</a></p>
@@ -46,5 +45,4 @@
       </div>
     </div>
   </div>
-  <div class="col-md-3"></div>
 {% endblock content %}
