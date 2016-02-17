@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask_wtf import Form
-from wtforms import TextField, PasswordField
+from wtforms import TextField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 
@@ -53,6 +53,22 @@ class AddMosqueForm(Form):
     longitude = TextField(
         'خط العرض'
     )
+    imam_name = TextField(
+        'اسم الخطيب'
+    )
+    khutbah_start_time = TextField(
+        'وقت بداية الخطبة'
+    )
+    khutbah_lenth = TextField(
+        'مدة الخطبة'
+    )
+    has_chair_for_elderly = BooleanField(
+        'وجود كرسي لكبار السن'
+    )
+    has_morgue = BooleanField(
+        'وجود مغسلة اموات '
+    )
+
 
 
 class CreateTopic(Form):

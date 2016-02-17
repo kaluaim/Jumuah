@@ -2,7 +2,42 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
-<div class="col-md-12">
+
+<div class="main-container">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-6 singup-couple">
+        <div class="well-box">
+          <h2>أضف </h2>
+          <form class="form" role="form" method="post" action="">
+            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
+            {{ wtf.form_errors(form, hiddens="only") }}
+            {{ wtf.form_field(form.name) }}
+            {{ wtf.form_field(form.country) }}
+            {{ wtf.form_field(form.imam_name) }}
+            {{ wtf.form_field(form.khutbah_start_time) }}
+            {{ wtf.form_field(form.khutbah_lenth) }}
+            {{ wtf.form_field(form.has_chair_for_elderly) }}
+            {{ wtf.form_field(form.has_morgue) }}
+            {{ wtf.form_field(form.latitude) }}
+            {{ wtf.form_field(form.longitude) }}
+            <button class="btn tp-btn-primary tp-btn-lg" type="submit">أضف</button>
+          </br></br>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div id="map" style="width: 100%; height: 530px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="col-md-12">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">أضف جامع</h3>
@@ -26,7 +61,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <script async defer
   src="http://maps.googleapis.com/maps/api/js?key=AIzaSyApYOChVdCyTfGkZKwpOa0GWxERaAmRNvI&language=ar&callback=initMap"

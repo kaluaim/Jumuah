@@ -121,6 +121,24 @@ class Mosque(db.Model):
         return '<Mosque (name={})>'.format(self.name)
 
 
+class MosqueThing(db.Model):
+    __tablename__ = 'mosque_things'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    thing = db.Column(db.String, nullable=False)
+    value = db.Column(db.String, nullable=False)
+    mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))
+
+    def __init__(self, thing, value, mosque_id):
+        self.thing = thing
+        self.value = value
+        self.mosque_id = mosque_id
+
+    def __repr__(self):
+        return '<MosqueThing (thing={}, value={}, mosque_id={})>'.format(
+            self.thing, self.value, self.mosque_id)
+
+
 class Vote(db.Model):
     __tablename__ = 'votes'
 
