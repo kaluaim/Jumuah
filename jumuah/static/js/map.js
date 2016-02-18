@@ -26,3 +26,26 @@ function initMap() {
   });
 
 }
+
+// function initKnown() {
+//   $("#map-tab").click(function() {
+//     latitude = document.getElementById("map-known").attr("data-latitude");
+//     longitude = document.getElementById("map-known").attr("datat-longitude");
+//
+//     console.log('lat= ' + latitude + ', and long= ' + longitude);
+//
+//     var coordinates = {lat: latitude, lng: longitude};
+//
+//     var map = new google.maps.Map(document.getElementById('map-known'), {
+//       center: coordinates,
+//       streetViewControl: false,
+//       zoom: 16
+//     });
+//
+//     var marker = new google.maps.Marker({
+//       position: new google.maps.LatLng(coordinates),
+//       map: map,
+//       draggable: false
+//       });
+//   });
+// }

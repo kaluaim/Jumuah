@@ -40,24 +40,22 @@
       <div class="col-md-12">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#photo" title="Gallery" aria-controls="photo" role="tab" data-toggle="tab"> <i class="fa fa-photo"></i> <span class="tab-title">خطبة</span></a></li>
+          <li role="presentation" class="active"><a href="#photo" title="Gallery" aria-controls="photo" role="tab" data-toggle="tab"><i class="fa fa-map-marker"></i> <span class="tab-title">الموقع </span></a></li>
           <li role="presentation">
           <a href="#about" title="about info" aria-controls="about" role="tab" data-toggle="tab">
           <i class="fa fa-info-circle"></i>
           <span class="tab-title">معلومات</span>
           </a>
           </li>
-          <li role="presentation"><a href="#onmap" title="Location" aria-controls="onmap" role="tab" data-toggle="tab"> <i class="fa fa-map-marker"></i> <span class="tab-title">الموقع</span></a></li>
-          <li role="presentation"><a href="#video" title="Video" aria-controls="video" role="tab" data-toggle="tab"> <i class="fa fa-youtube-play"></i> <span class="tab-title">صور</span></a></li>
+          <li role="presentation"><a id="map-tab" href="#onmap" title="Location" aria-controls="onmap" role="tab" data-toggle="tab"> <i class="fa fa-pencil-square-o"></i> <span class="tab-title">خطبة</span></a></li>
+          <li role="presentation"><a href="#video" title="Video" aria-controls="video" role="tab" data-toggle="tab"> <i class="fa fa-photo"></i> <span class="tab-title">صور</span></a></li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content"><!-- tab content start-->
           <div role="tabpanel" class="tab-pane fade in active" id="photo">
-            <div class="venue-details">
-              <h3>عنوان الخطبة القادمة</h3>
-              <h1>الصلاة</h1>
-            </div>
+            <div id="map" style="width: 100%; height: 350px"></div>
+
 
           </div>
           <div role="tabpanel" class="tab-pane fade" id="about">
@@ -80,7 +78,10 @@
               </div>
           </div>
           <div role="tabpanel" class="tab-pane fade" id="onmap">
-            <div id="map" style="width: 100%; height: 350px"></div>
+            <div class="venue-details">
+              <h3>عنوان الخطبة القادمة</h3>
+              <h1>الصلاة</h1>
+            </div>
           </div>
           <div role="tabpanel" class="tab-pane fade" id="video">
             <img src="/static/images/m-{{ mosque.id }}.jpg" alt="wedding venue" class="img-responsive">
@@ -88,6 +89,7 @@
         </div>
         <!-- /.tab content start-->
       </div>
+
     </div>
 
 <!-- <div id="slider" class="owl-carousel owl-theme slider">
@@ -281,7 +283,6 @@
     </div>
   </div>
 </div> -->
-
 <script async defer
   src="http://maps.googleapis.com/maps/api/js?key=AIzaSyApYOChVdCyTfGkZKwpOa0GWxERaAmRNvI&language=ar&callback=initMap"
   type="text/javascript">
