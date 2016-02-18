@@ -20,3 +20,19 @@
 select.form-control {
     background-position: 5% 50%;
 }
+
+.tp-nav .navbar-brand {
+    float: right;
+}
+
+.tp-nav .navbar-toggle {
+    float: left;
+}
+
+
+
+@media (max-width: 768px){
+  .tp-nav .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+      margin-top: 35px;
+  }
+}
