@@ -1431,3 +1431,10 @@ section.module.parallax h1 { color: #fff; font-size: 38px; font-weight: 700; tex
     background-color: #8BD2D4;
     border-color: #8BD2D4;
 }
+
+
+
+.vendor-image {
+    max-width: 292px;
+    max-height: 121px;
+}

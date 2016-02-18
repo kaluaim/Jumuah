@@ -2,17 +2,6 @@
 
 {% block content %}
 
-<div class="tp-page-head">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="page-header">
-          <h1>قائمة الجوامع</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="tp-breadcrumb">
   <div class="container">
     <div class="row">
@@ -71,7 +60,7 @@
         {% for mosque in mosques %}
         <div class="col-md-3 vendor-box"><!-- venue box start-->
          <div class="vendor-image"><!-- venue pic -->
-           <a href="#"><img src="/static/images/vendor-1.jpg" alt="wedding venue" class="img-responsive"></a>
+           <a href="#"><img src="/static/images/m-{{ mosque.id }}.jpg" alt="wedding venue" class="img-responsive"></a>
          </div>
          <!-- /.venue pic -->
          <div class="vendor-detail"><!-- venue details -->
@@ -81,13 +70,14 @@
               </div>
          <!-- venue details -->
          </div>
+         </div>
         {% endfor %}
       {% else %}
       <h1>هناك مشكلة!</h1>
       {% endif %}
 
 
-    </div>
+
     <!-- <div class="row">
       <div class="col-md-12 tp-pagination">
         <ul class="pagination">
@@ -103,7 +93,7 @@
     </div> -->
   </div>
 </div>
-
+</div>
 <!-- <div class="page-header">
   <h1>قائمة الجوامع</h1>
   <a class="btn btn-default pull-left" href="/mosque/add/" role="button">إضافة <i class="fa fa-plus"></i></a>
