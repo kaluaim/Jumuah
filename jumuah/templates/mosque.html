@@ -3,16 +3,111 @@
 
 {% block content %}
 
-<div id="slider" class="owl-carousel owl-theme slider">
+<div class="tp-page-head">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-header">
+          <h1></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tp-breadcrumb">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <ol class="breadcrumb">
+          <ol class="breadcrumb">
+            <li><a href="/">الرئيسية</a></li>
+            <li><a href="/mosque/">قائمة الجوامع</a></li>
+            <li class="active">{{ mosque.name }}</li>
+          </ol>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main-container">
+  <div class="container tabbed-page st-tabs">
+    <div class="row tab-page-header">
+      <div class="col-md-8 title"> <a href="#" class="label-primary">جامع</a>
+        <h1>{{ mosque.name }}</h1>
+        <p class="location"><i class="fa fa-map-marker"></i> {{ mosque.country }}</p>
+        <hr>
+      </div>
+      <div class="col-md-4 venue-data">
+        <div class="venue-info">
+          <div class="capacity">
+            <div>بداية الخطبة</div>
+            <span class="cap-people">١٢:٠٠</span> </div>
+          <div class="pricebox">
+            <div>مدة الخطبة</div>
+            <span class="price">٣٠ دقيقة</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#photo" title="Gallery" aria-controls="photo" role="tab" data-toggle="tab"> <i class="fa fa-photo"></i> <span class="tab-title">خطبة</span></a></li>
+          <li role="presentation">
+          <a href="#about" title="about info" aria-controls="about" role="tab" data-toggle="tab">
+          <i class="fa fa-info-circle"></i>
+          <span class="tab-title">معلومات</span>
+          </a>
+          </li>
+          <li role="presentation"><a href="#onmap" title="Location" aria-controls="onmap" role="tab" data-toggle="tab"> <i class="fa fa-map-marker"></i> <span class="tab-title">الموقع</span></a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content"><!-- tab content start-->
+          <div role="tabpanel" class="tab-pane fade in active" id="photo">
+            <div class="venue-details">
+              <h3>عنوان الخطبة القادمة</h3>
+              <h1>الصلاة</h1>
+            </div>
+
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="about">
+              <div class="venue-info">
+                <div class="capacity">
+                  <div>كرسي كبار السن</div>
+                  <span class="cap-people">نعم</span> </div>
+                <div class="pricebox">
+                  <div>مغسلة أموات</div>
+                  <span class="price">لا</span></div>
+              </div>
+
+              <div class="venue-info">
+                <div class="capacity">
+                  <div></div>
+                  <span class="cap-people"></span> </div>
+                <div class="pricebox">
+                  <div>خطيب الجامع</div>
+                  <span class="price">الشيخ عادل الكلباني</span> </div>
+              </div>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="onmap">
+            <div id="map" style="width: 100%; height: 350px"></div>
+          </div>
+        </div>
+        <!-- /.tab content start-->
+      </div>
+    </div>
+
+<!-- <div id="slider" class="owl-carousel owl-theme slider">
   <div class="item">
-    <div class="slider-pic"><img src="/static/images/hero-image-2.jpg" alt="Mirror Edge"></div>
+    <div class="slider-pic"><img src="/static/images/m-1.jpg" alt="Mirror Edge"></div>
 
   </div>
   <div class="item">
-    <div class="slider-pic"><img src="/static/images/venue-pic-3.jpg" alt="Wedding couple pic"></div>
+    <div class="slider-pic"><img src="/static/images/m-1.jpg" alt="Wedding couple pic"></div>
   </div>
   <div class="item">
-<div class="slider-pic"><img src="/static/images/venue-pic.jpg" alt="The Last of us"></div>  </div>
+<div class="slider-pic"><img src="/static/images/m-1.jpg" alt="The Last of us"></div>  </div>
 </div>
 <div class="tp-breadcrumb">
   <div class="container">
@@ -81,7 +176,7 @@
       <div class="col-md-4 page-sidebar">
         <div class="row">
           <div class="col-md-12">
-            <div class="venue-info"><!-- venue-info-->
+            <div class="venue-info">
               <div class="capacity">
                 <div>بداية الخطبة</div>
                 <span class="cap-people">١٢:٠٠</span> </div>
@@ -92,7 +187,7 @@
           </div>
 
           <div class="col-md-12">
-            <div class="venue-info"><!-- venue-info-->
+            <div class="venue-info">
               <div class="capacity">
                 <div>كرسي كبار السن</div>
                 <span class="cap-people">نعم</span> </div>
@@ -103,7 +198,7 @@
           </div>
 
           <div class="col-md-12">
-            <div class="venue-info"><!-- venue-info-->
+            <div class="venue-info">
               <div class="capacity">
                 <div></div>
                 <span class="cap-people"></span> </div>
@@ -123,7 +218,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 <!-- <div class="row">
