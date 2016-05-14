@@ -77,25 +77,6 @@ class OTP(db.Model):
                 self.expires_at, self.user_id)
 
 
-
-class Token(db.Model):
-    __tablename__ = 'tokens'
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    token = db.Column(db.String, nullable=False)
-    expires_at = db.Column(db.DateTime, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    def __init__(self, token, expires_at, user_id):
-        self.token = token
-        self.expires_at = expires_at
-        self.user_id = user_id
-
-    def __repr__(self):
-        return '<Token (token={}, expires_at={}, user_id={})>'.formate(
-                self.token, self.expires_at, self.user_id)
-
-
 class Mosque(db.Model):
     __tablename__ = 'mosques'
 
