@@ -28,7 +28,6 @@ class User(UserMixin, db.Model):
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     votes = db.relationship('Vote', backref='user', lazy='dynamic')
     otp = db.relationship('OTP', backref='user', lazy='dynamic')
-    token = db.relationship('Token', backref='user', lazy='dynamic')
 
     def __init__(self, country_code, phone, is_admin=False,
                 is_email_confirmed=False):
