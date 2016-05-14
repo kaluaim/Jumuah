@@ -2,22 +2,33 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
-  <div class="col-md-3"></div>
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">تحقق</h3>
+<div class="main-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 tp-title-center"><h1>  مرحبا بك في جمعة</h1>
       </div>
-      <div class="panel-body">
-        <form class="form" role="form" method="post" action="">
-          {{ form.csrf_token }}
-          {{ form.hidden_tag() }}
-          {{ wtf.form_errors(form, hiddens="only") }}
-          {{ wtf.form_field(form.otp_num) }}
-          <button class="btn btn-success" type="submit">تحقق</button>
-        </form>
+
+      </div>
+      <div class="col-md-offset-3 col-md-6 st-tabs">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">تحقق</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content ">
+          <div role="tabpanel" class="tab-pane active vendor-login" id="home">
+            <form class="form" role="form" method="post" action="">
+              {{ form.csrf_token }}
+              {{ form.hidden_tag() }}
+              {{ wtf.form_errors(form, hiddens="only") }}
+              {{ wtf.form_field(form.otp_num) }}
+              <button class="btn tp-btn-primary tp-btn-lg" type="submit">تحقق</button>
+              <br><br>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-3"></div>
+  </div>  
 {% endblock content %}
