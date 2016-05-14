@@ -36,3 +36,8 @@ select.form-control {
       margin-top: 35px;
   }
 }
+
+.vendor-image img {
+    height: 180px;
+    width: 100%;
+}
