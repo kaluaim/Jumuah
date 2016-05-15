@@ -61,7 +61,7 @@ class UserThing(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     thing = db.Column(db.String, nullable=False)
     value = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __init__(self, thing, value, user_id):
         self.thing = thing
