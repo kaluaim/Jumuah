@@ -55,6 +55,24 @@ class User(UserMixin, db.Model):
         return self.id
 
 
+class UserThing(db.Model):
+    __tablename__ = 'user_thing'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    thing = db.Column(db.String, nullable=False)
+    value = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __init__(self, thing, value, user_id):
+        self.thing = thing
+        self.value = value
+        self.user_id = user_id
+
+    def __repr__(self):
+        return '<UserThing (thing={}, value={}, user_id={})>'.format(
+            self.thing, self.value, self.user_id)
+
+
 class OTP(db.Model):
     __tablename__ = 'otps'
 
