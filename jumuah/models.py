@@ -24,6 +24,7 @@ class User(UserMixin, db.Model):
     country_code = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, nullable=False, unique=True)
     date_joined = db.Column(db.DateTime, nullable=False)
+    date_modified = db.Column(db.DateTime, nullable=False)
     last_login = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     #votes = db.relationship('Vote', backref='user', lazy='dynamic')
@@ -56,7 +57,7 @@ class User(UserMixin, db.Model):
 
 
 class UserThing(db.Model):
-    __tablename__ = 'user_thing'
+    __tablename__ = 'user_things'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     thing = db.Column(db.String, nullable=False)
@@ -94,8 +95,8 @@ class OTP(db.Model):
                 self.expires_at, self.user_id)
 
 
-class Mosque(db.Model):
-    __tablename__ = 'mosques'
+class Place(db.Model):
+    __tablename__ = 'places'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
@@ -103,8 +104,7 @@ class Mosque(db.Model):
     latitude = db.Column(db.String, nullable=False)
     longitude = db.Column(db.String, nullable=False)
     date_added = db.Column(db.DateTime, nullable=False)
-    imam_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    topics = db.relationship('Topic', backref='mosque', lazy='dynamic')
+    date_modified = db.Column(db.DateTime, nullable=False)
     is_active = db.Column(db.Boolean, default=False)
 
     def __init__(self, name, country, latitude, longitude, is_active=False):
@@ -113,27 +113,28 @@ class Mosque(db.Model):
         self.latitude = latitude
         self.longitude = longitude
         self.date_added = datetime.datetime.now()
+        self.date_modified = datetime.datetime.now()
         self.is_active = is_active
 
     def __repr__(self):
-        return '<Mosque (name={})>'.format(self.name)
+        return '<Place (name={})>'.format(self.name)
 
 
-class MosqueThing(db.Model):
-    __tablename__ = 'mosque_things'
+class PlaceThing(db.Model):
+    __tablename__ = 'place_things'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     thing = db.Column(db.String, nullable=False)
     value = db.Column(db.String, nullable=False)
-    mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))
+    place_id = db.Column(db.Integer, db.ForeignKey('places.id'))
 
     def __init__(self, thing, value, mosque_id):
         self.thing = thing
         self.value = value
-        self.mosque_id = mosque_id
+        self.place_id = place_id
 
     def __repr__(self):
-        return '<MosqueThing (thing={}, value={}, mosque_id={})>'.format(
+        return '<PlaceThing (thing={}, value={}, mosque_id={})>'.format(
             self.thing, self.value, self.mosque_id)
 
 
