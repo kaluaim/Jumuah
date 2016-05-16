@@ -26,7 +26,7 @@ class User(UserMixin, db.Model):
     date_joined = db.Column(db.DateTime, nullable=False)
     last_login = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
-    votes = db.relationship('Vote', backref='user', lazy='dynamic')
+    #votes = db.relationship('Vote', backref='user', lazy='dynamic')
     otp = db.relationship('OTP', backref='user', lazy='dynamic')
 
     def __init__(self, country_code, phone, is_admin=False,
@@ -137,6 +137,7 @@ class MosqueThing(db.Model):
             self.thing, self.value, self.mosque_id)
 
 
+'''
 class Vote(db.Model):
     __tablename__ = 'votes'
 
@@ -152,7 +153,7 @@ class Vote(db.Model):
 
     def __repr__(self):
         return '<Vote (topic={})>'.format(self.topic_id)
-
+'''
 
 class Topic(db.Model):
     __tablename__ = 'topics'
@@ -163,7 +164,7 @@ class Topic(db.Model):
     mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))
     user_created_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     date_added = db.Column(db.DateTime, nullable=False)
-    votes = db.relationship('Vote', backref='topic', lazy='dynamic')
+    #votes = db.relationship('Vote', backref='topic', lazy='dynamic')
     # statuses: new, ignore, future
     status = db.Column(db.String)
 
