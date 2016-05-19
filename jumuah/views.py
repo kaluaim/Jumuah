@@ -5,7 +5,7 @@ from forms import (LoginEmailForm, LoginMobileForm, RegisterForm,
                    AddMosqueForm, CreateTopic, VerifyForm)
 from flask.ext.login import (login_user, logout_user, login_required,
                             current_user)
-from models import User, Mosque, Topic, OTP
+from models import User, Place, Topic, OTP
 from random import randint
 from datetime import datetime, timedelta
 
@@ -120,16 +120,16 @@ def logout():
     flash('You were logged out. Bye!', 'success')
     return redirect(url_for('index'))
 
-@app.route('/mosque/')
-@app.route('/mosque/<int:mosque_id>/', methods=['GET'])
-def mosque(mosque_id=-1):
-    if mosque_id is not -1:
+@app.route('/place/')
+@app.route('/place/<int:place_id>/', methods=['GET'])
+def place(place_id=-1):
+    if place_id is not -1:
         form = CreateTopic(request.form)
-        mosque = Mosque.query.filter_by(id=mosque_id).first_or_404()
-        return render_template('mosque.html', mosque=mosque, form=form)
+        place = Place.query.filter_by(id=place_id).first_or_404()
+        return render_template('place.html', mosque=mosque, form=form)
     else:
         mosques = Mosque.query.all()
-        return render_template('mosques.html/', mosques=mosques)
+        return render_template('places.html/', mosques=mosques)
 
 @app.route('/mosque/add/', methods=['GET', 'POST'])
 @login_required

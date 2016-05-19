@@ -12,7 +12,7 @@
         </ol>
       </div>
       <!-- <div class="col-md-4 text-right"> <a class="btn tp-btn-link" role="button" data-toggle="collapse" href="#searchform" aria-expanded="false" aria-controls="searchform"> إظهار/إخفاء البحث </a> </div> -->
-      <div class="col-md-4 text-right"> <a class="btn tp-btn-link" role="button"  href="/mosque/add/">إضافة <i class="fa fa-plus"></i></a> </div>
+      <div class="col-md-4 text-right"> <a class="btn tp-btn-link" role="button"  href="/place/add/">إضافة <i class="fa fa-plus"></i></a> </div>
     </div>
   </div>
 </div>
@@ -53,20 +53,20 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h2>تم إسترجاع {{ mosques | count }} جامع.</h2>
+        <h2>تم إسترجاع {{ places | count }} جامع.</h2>
       </div>
 
-      {% if mosques %}
-        {% for mosque in mosques %}
+      {% if places %}
+        {% for place in places %}
         <div class="col-md-3 vendor-box"><!-- venue box start-->
          <div class="vendor-image"><!-- venue pic -->
-           <a href="#"><img src="/static/images/m-{{ mosque.id }}.jpg" alt="wedding venue" class="img-responsive"></a>
+           <a href="#"><img src="/static/images/m-{{ place.id }}.jpg" alt="wedding venue" class="img-responsive"></a>
          </div>
          <!-- /.venue pic -->
          <div class="vendor-detail"><!-- venue details -->
            <div class="caption"><!-- caption -->
-             <h2><a href="/mosque/{{ mosque.id }}" class="title">{{ mosque.name }}</a></h2>
-             <p class="location"><i class="fa fa-map-marker"></i> {{ mosque.country }}</p>
+             <h2><a href="/place/{{ place.id }}" class="title">{{ place.name }}</a></h2>
+             <p class="location"><i class="fa fa-map-marker"></i> {{ place.country }}</p>
               </div>
          <!-- venue details -->
          </div>

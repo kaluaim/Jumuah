@@ -10,8 +10,8 @@
         <ol class="breadcrumb">
           <ol class="breadcrumb">
             <li><a href="/">الرئيسية</a></li>
-            <li><a href="/mosque/">قائمة الجوامع</a></li>
-            <li class="active">{{ mosque.name }}</li>
+            <li><a href="/place/">قائمة الجوامع</a></li>
+            <li class="active">{{ place.name }}</li>
           </ol>
         </ol>
       </div>
@@ -22,8 +22,8 @@
   <div class="container tabbed-page st-tabs">
     <div class="row tab-page-header">
       <div class="col-md-8 title"> <a href="#" class="label-primary">جامع</a>
-        <h1>{{ mosque.name }}</h1>
-        <p class="location"><i class="fa fa-map-marker"></i> {{ mosque.country }}</p>
+        <h1>{{ place.name }}</h1>
+        <p class="location"><i class="fa fa-map-marker"></i> {{ place.country }}</p>
       </div>
       <div class="col-md-4 venue-data">
         <div class="venue-info">
@@ -84,7 +84,7 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane fade" id="video">
-            <img src="/static/images/m-{{ mosque.id }}.jpg" alt="wedding venue" class="img-responsive">
+            <img src="/static/images/m-{{ place.id }}.jpg" alt="wedding venue" class="img-responsive">
           </div>
         </div>
         <!-- /.tab content start-->
