@@ -5,7 +5,7 @@ from forms import (LoginEmailForm, LoginMobileForm, RegisterForm,
                    AddMosqueForm, CreateTopic, VerifyForm)
 from flask.ext.login import (login_user, logout_user, login_required,
                             current_user)
-from models import User, Mosque, Topic, Vote, OTP
+from models import User, Place, Topic, OTP
 from random import randint
 from datetime import datetime, timedelta
 
