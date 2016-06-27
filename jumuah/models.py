@@ -15,7 +15,6 @@ def load_user(user_id):
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
     password_hash = db.Column(db.String)
@@ -23,19 +22,16 @@ class User(UserMixin, db.Model):
     is_email_confirmed = db.Column(db.Boolean, nullable=False, default=False)
     country_code = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, nullable=False, unique=True)
-    date_joined = db.Column(db.DateTime, nullable=False)
-    date_modified = db.Column(db.DateTime, nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False)
     last_login = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
-    #votes = db.relationship('Vote', backref='user', lazy='dynamic')
     otp = db.relationship('OTP', backref='user', lazy='dynamic')
 
     def __init__(self, country_code, phone, is_admin=False,
                 is_email_confirmed=False):
         self.country_code = country_code
         self.phone = phone
-        self.date_joined = datetime.datetime.now()
-        self.last_login = datetime.datetime.now()
+        self.date_created = datetime.datetime.now()
         self.is_admin = is_admin
         self.is_email_confirmed = is_email_confirmed
 
@@ -58,7 +54,6 @@ class User(UserMixin, db.Model):
 
 class UserThing(db.Model):
     __tablename__ = 'user_things'
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     thing = db.Column(db.String, nullable=False)
     value = db.Column(db.String, nullable=False)
@@ -73,10 +68,12 @@ class UserThing(db.Model):
         return '<UserThing (thing={}, value={}, user_id={})>'.format(
             self.thing, self.value, self.user_id)
 
+class ACL(db.Model):
+    __tablename__ = 'acls'
+
 
 class OTP(db.Model):
     __tablename__ = 'otps'
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     otp_type = db.Column(db.String)
     otp_num = db.Column(db.Integer, nullable=False)
@@ -97,24 +94,23 @@ class OTP(db.Model):
 
 class Place(db.Model):
     __tablename__ = 'places'
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    type = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=False)
     country = db.Column(db.String, nullable=False)
     latitude = db.Column(db.String, nullable=False)
     longitude = db.Column(db.String, nullable=False)
-    date_added = db.Column(db.DateTime, nullable=False)
-    date_modified = db.Column(db.DateTime, nullable=False)
-    is_active = db.Column(db.Boolean, default=False)
+    user_created_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    date_created = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, name, country, latitude, longitude, is_active=False):
+    def __init__(self, type, name, country, latitude, longitude, user_created_id):
+        self.type = type
         self.name = name
         self.country = country
         self.latitude = latitude
         self.longitude = longitude
-        self.date_added = datetime.datetime.now()
-        self.date_modified = datetime.datetime.now()
-        self.is_active = is_active
+        self.user_created_id = user_created_id
+        self.date_created = datetime.datetime.now()
 
     def __repr__(self):
         return '<Place (name={})>'.format(self.name)
@@ -122,83 +118,133 @@ class Place(db.Model):
 
 class PlaceThing(db.Model):
     __tablename__ = 'place_things'
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     thing = db.Column(db.String, nullable=False)
     value = db.Column(db.String, nullable=False)
     place_id = db.Column(db.Integer, db.ForeignKey('places.id'))
 
-    def __init__(self, thing, value, mosque_id):
+    def __init__(self, thing, value, place_id):
         self.thing = thing
         self.value = value
         self.place_id = place_id
 
     def __repr__(self):
-        return '<PlaceThing (thing={}, value={}, mosque_id={})>'.format(
-            self.thing, self.value, self.mosque_id)
+        return '<PlaceThing (thing={}, value={}, place_id={})>'.format(
+            self.thing, self.value, self.place_id)
 
 
-'''
-class Vote(db.Model):
-    __tablename__ = 'votes'
-
+class Event(db.Model):
+    __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    vote_date = db.Column(db.DateTime, nullable=False)
+    type = db.Column(db.String, nullable=False)
+    place_id = db.Column(db.Integer, db.ForeignKey('places.id'))
+    user_created_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    date_created = db.Column(db.DateTime, nullable=False)
+    articles = db.relationship('Article', backref='article', lazy='dynamic')
+    things = db.relationship('ArticleThing', backref='thing', lazy='dynamic')
 
-    def __init__(self, topic_id, user_id):
-        self.topic_id = topic_id
-        self.user_id = user_id
-        self.vote_date = datetime.datetime.now()
+    def __init__(self, type, place_id, user_created_id):
+        self.type = type
+        self.place_id = place_id
+        self.user_created_id = user_created_id
+        self.date_created = datetime.datetime.now()
 
     def __repr__(self):
-        return '<Vote (topic={})>'.format(self.topic_id)
-'''
+        return '<Event (place_id={}, type={})>'.format(self.place_id,
+                self.type)
 
-class Topic(db.Model):
-    __tablename__ = 'topics'
 
+class EventThing(db.Model):
+    __tablename__ = 'event_things'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    thing = db.Column(db.String, nullable=False)
+    value = db.Column(db.String, nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+
+    def __init__(self, thing, value, event_id):
+        self.thing = thing
+        self.value = value
+        self.event_id = event_id
+
+    def __repr__(self):
+        return '<EventThing (thing={}, value={}, event_id={})>'.format(
+            self.thing, self.value, self.event_id)
+
+
+class Article(db.Model):
+    __tablename__ = 'articles'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    type = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
-    mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))
+    plase_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     user_created_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    date_added = db.Column(db.DateTime, nullable=False)
-    #votes = db.relationship('Vote', backref='topic', lazy='dynamic')
-    # statuses: new, ignore, future
-    status = db.Column(db.String)
+    date_created = db.Column(db.DateTime, nullable=False)
+    things = db.relationship('ArticleThing', backref='thing', lazy='dynamic')
 
-    def __init__(self, title, description, user_created_id, mosque_id, status='new'):
+    def __init__(self, type, title, description, user_created_id, plase_id):
+        self.type = type
         self.title = title
         self.description = description
-        self.user_created_id=user_created_id
-        self.mosque_id = mosque_id
-        self.date_added = datetime.datetime.now()
-        self.status = status
+        self.user_created_id = user_created_id
+        self.plase_id = plase_id
+        self.date_created = datetime.datetime.now()
 
     def __repr__(self):
-        return '<Topic (title={})>'.format(self.title)
+        return '<Article (title={})>'.format(self.title)
 
 
-class Khutbah(db.Model):
-    __tablename__ = 'khutbahs'
-
+class ArticleThing(db.Model):
+    __tablename__ = 'article_things'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    mosque_id = db.Column(db.Integer, db.ForeignKey('mosques.id'))
-    topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'))
-    date = db.Column(db.DateTime, nullable=False)
-    is_enforced = db.Column(db.Boolean, nullable=False, default=False)
+    thing = db.Column(db.String, nullable=False)
+    value = db.Column(db.String, nullable=False)
+    article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
 
-    def __init__(self, mosque_id, topic_id, date, is_enforced=False):
-        self.mosque_id = mosque_id
-        self.topic_id = topic_id
-        self.date = date
-        self.is_enforced = is_enforced
+    def __init__(self, thing, value, article_id):
+        self.thing = thing
+        self.value = value
+        self.article_id = article_id
 
     def __repr__(self):
-        return '<Khutbah (mosque_id={}, topic_id={})>'.format(self.mosque_id,
-                self.topic_id)
+        return '<ArticleThing (thing={}, value={}, article_id={})>'.format(
+            self.thing, self.value, self.article_id)
+
+
+class Signal(db.Model):
+    __tablename__ = 'signals'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    type = db.Column(db.String, nullable=False)
+    plase_id = db.Column(db.Integer, db.ForeignKey('places.id'))
+    user_created_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    date_created = db.Column(db.DateTime, nullable=False)
+    things = db.relationship('SignalThing', backref='thing', lazy='dynamic')
+
+    def __init__(self, type, user_created_id, plase_id):
+        self.type = type
+        self.user_created_id = user_created_id
+        self.plase_id = plase_id
+        self.date_created = datetime.datetime.now()
+
+    def __repr__(self):
+        return '<Signal (id={})>'.format(self.id)
+
+
+class SignalThing(db.Model):
+    __tablename__ = 'signal_things'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    thing = db.Column(db.String, nullable=False)
+    value = db.Column(db.String, nullable=False)
+    signal_id = db.Column(db.Integer, db.ForeignKey('signals.id'))
+
+    def __init__(self, thing, value, signal_id):
+        self.thing = thing
+        self.value = value
+        self.signal_id = signal_id
+
+    def __repr__(self):
+        return '<SignalThing (thing={}, value={}, signal_id={})>'.format(
+            self.thing, self.value, self.article_id)
 
 
 if __name__ == '__main__':
